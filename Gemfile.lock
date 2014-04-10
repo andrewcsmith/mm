@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    hoe (3.11.0)
+      rake (>= 0.8, < 11.0)
+    json (1.7.7)
+    nmatrix (0.1.0.rc4)
+      rdoc (>= 4.0.1)
+    rake (10.2.2)
+    rdoc (4.1.0)
+      json (~> 1.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hoe
+  nmatrix
