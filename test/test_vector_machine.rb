@@ -1,7 +1,8 @@
 require "minitest/autorun"
+
 require "vector_machine"
 
-class TestVectorMachine < MiniTest::Unit::TestCase
+class TestVectorMachine < Minitest::Test
   def setup
     @m = ::NMatrix.new([3], [0, 1, 2])
     @vm = VectorMachine.new
@@ -33,10 +34,12 @@ class TestVectorMachine < MiniTest::Unit::TestCase
     exp = N[[0, 1], [0, 2], [1, 2]]
     assert_equal exp, @vm.get_combinatorial_pairs(@m)
   end
-
+  
   def test_gets_combinatorial_pairs_2d
     @m = N[[0, 1], [0, 2], [1, 2]]
     exp = N[ [[0, 1], [0, 2]], [[0, 1], [1, 2]], [[0, 2], [1, 2]] ]
     assert_equal exp, @vm.get_combinatorial_pairs(@m)
   end
 end
+
+

@@ -1,6 +1,6 @@
 require "minitest/autorun"
 require "mm"
 
-class TestMM < MiniTest::Unit::TestCase
+class TestMM < Minitest::Test
 
 end
