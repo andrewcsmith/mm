@@ -40,6 +40,10 @@ class TestVectorMachine < Minitest::Test
     exp = N[ [[0, 1], [0, 2]], [[0, 1], [1, 2]], [[0, 2], [1, 2]] ]
     assert_equal exp, @vm.get_combinatorial_pairs(@m)
   end
+
+  def test_old_adjacent_pairs_1d
+    assert_equal N[[0, 1], [1, 2]], @vm.get_adjacent_pairs_old(@m)
+  end
 end
 
 

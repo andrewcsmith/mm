@@ -13,23 +13,30 @@ class VectorMachine
     out_shape
   end
 
+  
+  # TODO: Benchmark some extremely large Arrays, looking at the difference between NMatrix and Array.
+  #       I have a hunch that NMatrix will do better on larger arrays than on smaller ones, because
+  #       of the ovehead that it seems to be spending on creating the NMatrix objects.
+  #
   # Adjacent pairs of an NMatrix's outermost dimension
   #
   # Benchmarking results:
   # bench_get_adjacent_pairs_1d  0.000162  0.000469  0.004219  0.069569  0.704543
-  #   def get_adjacent_pairs(vector)
-  #     out_shape = get_pairs_shape(vector)
-  #     out = NMatrix.zeros(out_shape, dtype: vector.dtype, stype: vector.stype)
-  #     
-  #     args = out.shape.map {:*}
-  #     
-  #     out_shape[0] -= 1
-  #     out.rank(0, 0, :reference)[*args]= vector.rank(0, 0...vector.shape[0]-1).reshape(out_shape)
-  #     out.rank(0, 1, :reference)[*args]= vector.rank(0, 1...vector.shape[0]).reshape(out_shape)
-  #     out
-  #   end
-  # 
-  # alias :get_adjacent_pairs_old :get_adjacent_pairs
+  #
+  def get_adjacent_pairs(vector)
+    out_shape = get_pairs_shape(vector)
+    out = NMatrix.zeros(out_shape, dtype: vector.dtype, stype: vector.stype)
+      
+    args = out_shape.map {:*}
+      
+    out_slice = out_shape.dup
+    out_slice[0] -= 1
+    out.rank(1, 0...out.shape[1]-1, :reference)[*args]= vector.rank(0, 0...vector.shape[0]-1)
+    out.rank(1, 1...out.shape[1], :reference)[*args]= vector.rank(0, 1...vector.shape[0])
+    out
+  end
+  
+  alias :get_adjacent_pairs_old :get_adjacent_pairs
 
   # Adjacent pairs of an NMatrix's outermost dimension
   #

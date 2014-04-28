@@ -10,10 +10,34 @@ class TestVectorMachine < Minitest::Benchmark
     @vm = VectorMachine.new
   end
 
+  def self.bench_range
+    [1, 10, 100, 1000, 10000]
+  end
+  
   def bench_get_adjacent_pairs_1d
     assert_performance_linear 0.999 do |n|
       n.times do
         @vm.get_adjacent_pairs(@m)
+      end
+    end
+  end
+
+  def bench_large_adjacent_pairs_old_1d
+    @m = ::NMatrix.random([2048])
+    assert_performance_linear 0.999 do |n|
+      n.times do
+        @vm.get_adjacent_pairs_old @m
+      end
+    end
+  end
+
+
+
+  def bench_large_adjacent_pairs_1d
+    @m = ::NMatrix.random([2048])
+    assert_performance_linear 0.999 do |n|
+      n.times do
+        @vm.get_adjacent_pairs @m
       end
     end
   end
