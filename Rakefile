@@ -5,10 +5,12 @@ require "hoe"
 
 # Hoe.plugin :compiler
 # Hoe.plugin :gem_prelude_sucks
-# Hoe.plugin :inline
 # Hoe.plugin :racc
 # Hoe.plugin :rcov
+# Hoe::plugin :flay
+# Hoe::plugin :flog
 
+Hoe.plugin :inline
 Hoe.plugin :minitest
 
 Hoe.spec "mm" do

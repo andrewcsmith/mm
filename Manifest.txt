@@ -1,8 +1,12 @@
 .autotest
+Gemfile
+Gemfile.lock
 History.txt
 Manifest.txt
 README.txt
 Rakefile
 bin/mm
 lib/mm.rb
+lib/vector_machine.rb
 test/test_mm.rb
+test/test_vector_machine.rb
