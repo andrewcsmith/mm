@@ -27,4 +27,16 @@ class TestVectorMachine < MiniTest::Unit::TestCase
     ]
     assert_equal NMatrix.new([2,2,3,2], exp.flatten), @vm.get_adjacent_pairs(@m)
   end
+  
+  # Testing on the combinatorial pairs
+  def test_gets_combinatorial_pairs_1d
+    exp = N[[0, 1], [0, 2], [1, 2]]
+    assert_equal exp, @vm.get_combinatorial_pairs(@m)
+  end
+
+  def test_gets_combinatorial_pairs_2d
+    @m = N[[0, 1], [0, 2], [1, 2]]
+    exp = N[ [[0, 1], [0, 2]], [[0, 1], [1, 2]], [[0, 2], [1, 2]] ]
+    assert_equal exp, @vm.get_combinatorial_pairs(@m)
+  end
 end
