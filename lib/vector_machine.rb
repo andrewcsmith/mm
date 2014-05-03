@@ -2,7 +2,6 @@ require "nmatrix"
 
 class VectorMachine
   # TODO: Refactor so that we can call #adjacent_pairs on a Vector object
-  
   def get_pairs_shape(vector, type = :adjacent)
     out_shape = vector.shape << 2
     if type == :adjacent
@@ -13,7 +12,6 @@ class VectorMachine
     out_shape
   end
 
-  
   # TODO: Benchmark some extremely large Arrays, looking at the difference between NMatrix and Array.
   #       I have a hunch that NMatrix will do better on larger arrays than on smaller ones, because
   #       of the ovehead that it seems to be spending on creating the NMatrix objects.
@@ -35,22 +33,17 @@ class VectorMachine
     out.rank(1, 1...out.shape[1], :reference)[*args]= vector.rank(0, 1...vector.shape[0])
     out
   end
-  
+
   alias :get_adjacent_pairs_old :get_adjacent_pairs
 
-  # Adjacent pairs of an NMatrix's outermost dimension
-  #
-  # Benchmarking results:
-  # bench_get_adjacent_pairs_1d  0.000079  0.000115  0.000795  0.008025  0.100932
   def get_adjacent_pairs(vector)
-    # still have to define the out_shape separately
-    out_shape = get_pairs_shape(vector)
-    a_vec = vector.to_a
-    memo = []
-    (0...a_vec.size-1).each do |i|
-      memo << [a_vec[i], a_vec[i+1]]
+    if vector.is_a? NMatrix
+      # We only want the outer pair
+      NMatrix.new(get_pairs_shape(vector), vector.to_a.each_cons(2).inject([], :<<).flatten)
+    else
+      # Fallback for anything Enumerable
+      vector.each_cons(2).inject([], :<<)
     end
-    NMatrix.new(out_shape, memo.flatten)
   end
 
   # Combinatorial pairs of an NMatrix's outermost dimension

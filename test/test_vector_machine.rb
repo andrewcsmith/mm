@@ -1,4 +1,4 @@
-require "minitest/autorun"
+# require "minitest/autorun"
 
 require "vector_machine"
 
@@ -7,7 +7,7 @@ class TestVectorMachine < Minitest::Test
     @m = ::NMatrix.new([3], [0, 1, 2])
     @vm = VectorMachine.new
   end
-  
+
   # Testing on 1D vectors
   def test_gets_adjacent_pairs_1d
     assert_equal N[[0, 1], [1, 2]], @vm.get_adjacent_pairs(@m)
