@@ -1,47 +1,44 @@
 require "nmatrix"
 
 class VectorMachine
-  # TODO: Refactor so that we can call #adjacent_pairs on a Vector object
+  # Conenience method for getting the shape of a pairs array
   def get_pairs_shape(vector, type = :adjacent)
-    out_shape = vector.shape << 2
+    out_shape = vector.shape
     if type == :adjacent
       out_shape[0] -= 1
+      out_shape.insert 1, 2
     elsif type == :combinatorial
+      out_shape << 2
       out_shape[0] = (out_shape[0]-1).downto(1).reduce(:+)
     end
     out_shape
   end
 
-  # TODO: Benchmark some extremely large Arrays, looking at the difference between NMatrix and Array.
-  #       I have a hunch that NMatrix will do better on larger arrays than on smaller ones, because
-  #       of the ovehead that it seems to be spending on creating the NMatrix objects.
-  #
   # Adjacent pairs of an NMatrix's outermost dimension
-  #
-  # Benchmarking results:
-  # bench_get_adjacent_pairs_1d  0.000162  0.000469  0.004219  0.069569  0.704543
-  #
-  def get_adjacent_pairs(vector)
-    out_shape = get_pairs_shape(vector)
-    out = NMatrix.zeros(out_shape, dtype: vector.dtype, stype: vector.stype)
-      
-    args = out_shape.map {:*}
-      
-    out_slice = out_shape.dup
-    out_slice[0] -= 1
-    out.rank(1, 0...out.shape[1]-1, :reference)[*args]= vector.rank(0, 0...vector.shape[0]-1)
-    out.rank(1, 1...out.shape[1], :reference)[*args]= vector.rank(0, 1...vector.shape[0])
+  # Optimized for use with large NMatrix objects (anything over 10 elements)
+  # Note that all matrics must be the same size
+  def get_adjacent_pairs_large(vector)
+    [:rank, :shape].each do |x| 
+      if !vector.respond_to? x
+        raise ArgumentError, "#{vector.class} does not implement #{x}"
+      end
+    end 
+    # Set up the output matrix
+    out = NMatrix.zeros(get_pairs_shape(vector), dtype: vector.dtype, stype: vector.stype)
+    # Create one :* symbol for each dimension (for slice assignment)
+    slice_args = out.shape.map {:*}
+    out.rank(1, 0...out.shape[1]-1, :reference)[*slice_args]= vector.rank(0, 0...vector.shape[0]-1)
+    out.rank(1, 1...out.shape[1], :reference)[*slice_args]= vector.rank(0, 1...vector.shape[0])
     out
   end
 
-  alias :get_adjacent_pairs_old :get_adjacent_pairs
-
+  # General method to get adjacent pairs
   def get_adjacent_pairs(vector)
     if vector.is_a? NMatrix
       # We only want the outer pair
       NMatrix.new(get_pairs_shape(vector), vector.to_a.each_cons(2).inject([], :<<).flatten)
     else
-      # Fallback for anything Enumerable
+      # Fallback for anything Enumerable, returns Array
       vector.each_cons(2).inject([], :<<)
     end
   end
@@ -55,10 +52,15 @@ class VectorMachine
   #
   def get_combinatorial_pairs(vector)
     # getting the combinations via the normal array method
-    combos = vector.to_a.combination(2).to_a.flatten
+    combos = vector.to_a.combination(2).to_a
+    if vector.class == combos.class
+      return combos
+    end
     # get the proper shape
+    # this should be obsolete once we have Array#to_nm fixed
     out_shape = get_pairs_shape(vector, :combinatorial)
     # set up the output matrix
-    NMatrix.new(out_shape, combos, dtype: vector.dtype, stype: vector.stype)
+    NMatrix.new(out_shape, combos.flatten, dtype: vector.dtype, stype: vector.stype)
   end
 end
+
