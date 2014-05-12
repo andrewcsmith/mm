@@ -1,20 +1,60 @@
 - Complete functions for getting combinatorial and adjacent pairs
 	- fix any problems with shapes, test more thoroughly
-	- add the ability of recursion to it
+	- add the ability to recurse throughout an Array tree 
 - Create a selection of distance functions that work with NMatrix etc
 - These should be implementation-agnostic
-- Ideally they should be of the symbol/method format, where the user passes a symbol of the method to the metric
+- Ideally they should be of the symbol/method format, where the user passes a
+  symbol of the method to the metric
 - Create a Metric class, perhaps as a subclass of Proc
 - What does it mean to subclass Proc?
 - Do some research.
 	- What about subclassing Method? What would that give us?
-- Instead of a "factory" class, the creation of the metric should take place in its initialization. 
-	- Metric.new should take arguments similar to DistConfig, but with a specific implementation of OLM, OCM, etc. 
-	- This is out of a desire to tie the selection of the logic into the distance function.
-	- However, there could be MM.ocm, MM.olm, etc., functions that are "factories" that call the normal instantiation method. But it should not be possible to create a metric without the DistConfig in instantiation.
+- Instead of a "factory" class, the creation of the metric should take place in
+  its initialization. 
+	- Metric.new should take arguments similar to DistConfig, but with a
+	  specific implementation of OLM, OCM, etc. 
+	- This is out of a desire to tie the selection of the logic into the
+	  distance function.
+	- However, there could be MM.ocm, MM.olm, etc., functions that are
+	  "factories" that call the normal instantiation method. But it should
+not be possible to create a metric without the DistConfig in instantiation.
 
 Implementation and interface requirements:
 - Objects should implement [] and #each
 - Objects should implement whatever distance method is called by the Metric
 
 Additional distance functions should (ideally) be in their own gems.
+
+== Metric Class Methods 
+
+=== ::new(ordering, pairing, scaling, delta) 
+
+Generates a new morphological metric based on various parameters
+
+**ordering**: can be true or false. Corresponds to ordered/unordered.
+
+**pairing**: Similar to the delta. If it is a Proc, then the pairing function is
+called on each vector (or however it is handled by the ordering). If it is a
+Symbol, then we look it up in MM::PAIRING_FUNCTIONS.
+
+**scaling**: *always* a Proc. There are prebaked scaling functions for absolute,
+relative, and unscaled that are available for use. If a Symbol is passed instead
+of a Proc, it looks for the Proc in the Hash MM::SCALING_FUNCTIONS
+
+**delta functions**: If it is a Proc, then the delta function is used as d(x, y)
+on each element. If it is a symbol, then the symbol is first looked up in the
+MM::DELTA_FUNCTIONS hash. If it is not found, then x.symbol(y) is attempted.
+Delta functions should aspire to being as general as possible; let the source
+implement the method.
+
+**interval functions**: We should instead brew the int_func into the method of
+finding pairs. This is where the Pairs class might come in handy; it could
+generate functions (Procs, whatever) as a factory from various values, taking
+into account what each value should be compared to. It's not [element, element],
+but [element, comparison-element] that matters.
+
+=== ::olm(scaling, delta) 
+
+Generates a new morphological metric calling ::new with the given ordering and
+pairing
+

@@ -1,11 +1,11 @@
 # require "minitest/autorun"
 
-require "vector_machine"
+require "mm/pairs"
 require "helpers/adjacent_pairs_tests.rb"
 
 class TestOneDimensionalNMatrix < Minitest::Test
   def setup
-    @vm = VectorMachine.new
+    @pairs = MM::Pairs.new
     @m = ::NMatrix.seq([3])
   end
 
@@ -32,7 +32,7 @@ end
 
 class TestTwoDimensionalNMatrix < Minitest::Test
   def setup
-    @vm = VectorMachine.new
+    @pairs = MM::Pairs.new
     @m = ::NMatrix.seq([3, 2])
   end
 
@@ -63,7 +63,7 @@ end
 
 class TestThreeDimensionalNMatrix < Minitest::Test
   def setup
-    @vm = VectorMachine.new
+    @pairs = MM::Pairs.new
     @m = ::NMatrix.seq([4,3,2])
   end
 
@@ -86,7 +86,7 @@ end
 
 class TestOneDimensionalArray < Minitest::Test
   def setup
-    @vm = VectorMachine.new
+    @pairs = MM::Pairs.new
     @m = [0, 1, 2]
   end
 
@@ -118,7 +118,7 @@ end
 
 class TestTwoDimensionalArray < Minitest::Test
   def setup
-    @vm = VectorMachine.new
+    @pairs = MM::Pairs.new
     @m = [[0, 1], [2, 3], [4, 5]]
   end
    

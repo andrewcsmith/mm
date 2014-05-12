@@ -7,17 +7,17 @@ end
 
 module AdjacentPairsTests
   def test_gets_adjacent_pairs
-    assert_equal @exp, @vm.get_adjacent_pairs(@m)
+    assert_equal @exp, @pairs.get_adjacent_pairs(@m)
   end
   
   def test_gets_adjacent_pairs_large
-    assert_equal @exp, @vm.get_adjacent_pairs_large(@m)
+    assert_equal @exp, @pairs.get_adjacent_pairs_large(@m)
   end
 end
 
 module CombinatorialPairsTests
   def test_gets_combinatorial_pairs
-    assert_equal @exp, @vm.get_combinatorial_pairs(@m)
+    assert_equal @exp, @pairs.get_combinatorial_pairs(@m)
   end
 end
 
