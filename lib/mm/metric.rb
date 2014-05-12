@@ -1,15 +1,32 @@
 module MM
   class Metric
-    def initialize order, pair, scale, intra_delta, inter_delta
-      @order = order
+    def initialize o, p, s, ad, rd
+      @ordered = o
+      self.pair = p
+      self.scale = s
+      self.intra_delta = ad
+      self.inter_delta = rd
+    end
+
+    attr_accessor :ordered
+
+    def pair= pair
       @pair = MM::PAIR_FUNCTIONS[pair] || pair
+    end
+
+    def scale= scale
       @scale = MM::SCALING_FUNCTIONS[scale] || scale
+    end
+
+    def intra_delta= intra_delta
       @intra_delta = MM::DELTA_FUNCTIONS[intra_delta] || intra_delta
+    end
+
+    def inter_delta= inter_delta
       @inter_delta = MM::DELTA_FUNCTIONS[inter_delta] || inter_delta
     end
 
-    attr_writer :intra_delta, :inter_delta
-
+    # Returns an Array of a pair of elements, where each is a vector of pairs
     def get_pairs v1, v2
       [v1, v2].map {|x| @pair.call(x)}
     end
@@ -22,22 +39,28 @@ module MM
 
     # Applies to elements at the same index over either collection
     def inter_delta diffs
-      diffs[0].zip(diffs[1]).map {|x| @inter_delta.call(x)}
+      if @ordered
+        return diffs[0].zip(diffs[1]).map {|x| @inter_delta.call(x)}
+      else
+        diffs.map {|x| x.inject(0, :+).to_f / x.size}
+      end
     end
 
-    # Deliberate choice to make this a method rather than stick with the Proc.
-    # This enables someone subclassing Metric to have a faster implementation
-    # by circumventing the Proc and overwriting the #scale method.
-    def scale diffs, size
-      @scale.call(diffs, size)
+    # Method, so that if you want to subclass Metric you totally can
+    def scale pairs
+      @scale.call pairs
+    end
+
+    # Default just takes the mean of everything. Try sum of squares?
+    def post_scale diffs, size
+      diffs.reduce(0, :+).to_f / size
     end
 
     def call v1, v2
       pairs = get_pairs v1, v2
-      # Replaces each pair with its difference in each vector
-      diffs = inter_delta(intra_delta(pairs))
-      # Sum over the differences and scale
-      scale diffs, pairs[0].size
+      vector_deltas = scale(intra_delta(pairs))
+      diffs = inter_delta(vector_deltas)
+      post_scale diffs, pairs[0].size
     end
   end
 end

@@ -31,7 +31,7 @@ Additional distance functions should (ideally) be in their own gems.
 
 Generates a new morphological metric based on various parameters
 
-**ordering**: can be true or false. Corresponds to ordered/unordered.
+**ordered**: can be true or false. Corresponds to ordered/unordered.
 
 **pairing**: Similar to the delta. If it is a Proc, then the pairing function is
 called on each vector (or however it is handled by the ordering). If it is a
@@ -46,6 +46,9 @@ on each element. If it is a symbol, then the symbol is first looked up in the
 MM::DELTA_FUNCTIONS hash. If it is not found, then x.symbol(y) is attempted.
 Delta functions should aspire to being as general as possible; let the source
 implement the method.
+
+**order**: this is confusing terminology - first-order and second-order
+difference functions.
 
 **interval functions**: We should instead brew the int_func into the method of
 finding pairs. This is where the Pairs class might come in handy; it could

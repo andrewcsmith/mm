@@ -1,6 +1,16 @@
 module MM
   SCALING_FUNCTIONS = {
-    :none => ->(diffs, size) {diffs.inject(0, :+).to_f / size}
+    :none => ->(pairs) {
+      pairs
+    },
+    :absolute => ->(pairs) {
+      max = (pairs.map &:max).max
+      pairs.map {|x| x.map {|y| y.to_f / max}}
+    },
+    :relative => ->(pairs) {
+      maxes = pairs.map(&:max)
+      pairs.zip(maxes).map {|pair, max| pair.map {|x| x.to_f / max}}
+    }
   }
 end
 
