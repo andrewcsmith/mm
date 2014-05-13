@@ -15,7 +15,11 @@ module MM
     end
 
     def scale= scale
-      @scale = MM::SCALING_FUNCTIONS[scale] || scale
+      if MM::Scaling.respond_to? scale
+        @scale = MM::Scaling.method scale
+      else
+        @scale = scale
+      end
     end
 
     def intra_delta= intra_delta
