@@ -14,9 +14,11 @@ Hoe.plugin :travis
 Hoe.plugin :inline
 Hoe.plugin :minitest
 
+
 Hoe.spec "mm" do
   developer("Andrew C. Smith", "andrewchristophersmith@gmail.com")
   license "MIT" # this should match the license in the README
+  self.readme_file = "README.rdoc"
 end
 
 # vim: syntax=ruby
