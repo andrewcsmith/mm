@@ -8,7 +8,7 @@ require "hoe"
 # Hoe.plugin :racc
 # Hoe.plugin :rcov
 Hoe.plugin :flay
-# Hoe::plugin :flog
+Hoe.plugin :flog
 
 Hoe.plugin :travis
 Hoe.plugin :inline

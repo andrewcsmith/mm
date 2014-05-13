@@ -15,21 +15,33 @@ module MM
       out_shape
     end
 
+    def responds_to_arguments arg, methods
+      methods.each do |x|
+        if !arg.respond_to? x
+          raise ArgumentError, "#{arg.class} does not implement #{x}"
+        end
+      end
+    end
+
+    # Gets the arguments to assign a
+    # full slice
+    def slice_args out
+      out.shape.map {:*}
+    end
+
+    def get_pairs_output_vector vector
+      NMatrix.zeros(get_pairs_shape(vector), dtype: vector.dtype, stype: vector.stype)
+    end
+
     # Adjacent pairs of an NMatrix's outermost dimension
     # Optimized for use with large NMatrix objects (anything over 10 elements)
     # Note that all matrics must be the same size
     def get_adjacent_pairs_large(vector)
-      [:rank, :shape].each do |x| 
-        if !vector.respond_to? x
-          raise ArgumentError, "#{vector.class} does not implement #{x}"
-        end
-      end 
+      responds_to_arguments vector, [:rank, :shape]
       # Set up the output matrix
-      out = NMatrix.zeros(get_pairs_shape(vector), dtype: vector.dtype, stype: vector.stype)
-      # Create one :* symbol for each dimension (for slice assignment)
-      slice_args = out.shape.map {:*}
-      out.rank(1, 0...out.shape[1]-1, :reference)[*slice_args]= vector.rank(0, 0...vector.shape[0]-1)
-      out.rank(1, 1...out.shape[1], :reference)[*slice_args]= vector.rank(0, 1...vector.shape[0])
+      out = get_pairs_output_vector vector
+      out.rank(1, 0...out.shape[1]-1, :reference)[*slice_args(out)]= vector.rank(0, 0...vector.shape[0]-1)
+      out.rank(1, 1...out.shape[1], :reference)[*slice_args(out)]= vector.rank(0, 1...vector.shape[0])
       out
     end
 
