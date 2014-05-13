@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'nmatrix'
+gem 'nmatrix', '>= 0.0.9'
 
 group :test do
   gem 'minitest'

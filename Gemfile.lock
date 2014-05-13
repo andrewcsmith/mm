@@ -17,4 +17,4 @@ PLATFORMS
 DEPENDENCIES
   hoe
   minitest
-  nmatrix
+  nmatrix (>= 0.0.9)
