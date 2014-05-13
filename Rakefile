@@ -10,6 +10,7 @@ require "hoe"
 Hoe.plugin :flay
 # Hoe::plugin :flog
 
+Hoe.plugin :travis
 Hoe.plugin :inline
 Hoe.plugin :minitest
 
