@@ -1,22 +1,31 @@
+{<img src="https://codeclimate.com/github/andrewcsmith/mm.png"
+/>}[https://codeclimate.com/github/andrewcsmith/mm]
+
+{<img src="https://travis-ci.org/andrewcsmith/mm.svg?branch=master"
+/>}[https://travis-ci.org/andrewcsmith/mm]
+
 = mm
 
-* FIX (url)
+https://www.github.com/andrewcsmith/mm
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Implements some Morphological Metrics, described by Larry Polansky.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Works on anything Enumerable
+* Can get a number of different MMs
+* Works extra fast on large NMatrix objects
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+Code sample, LOL
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* nmatrix
+* ruby
 
 == INSTALL:
 
