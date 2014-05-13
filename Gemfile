@@ -7,5 +7,6 @@ gem 'hoe-travis'
 group :test do
   gem 'minitest', '~> 5.0'
   gem 'hoe'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
