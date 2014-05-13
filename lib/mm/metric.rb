@@ -11,6 +11,7 @@ module MM
     attr_accessor :ordered
 
     def pair= pair
+      # inconsequential change
       @pair = MM::PAIR_FUNCTIONS[pair] || pair
     end
 
