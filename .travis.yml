@@ -1,7 +1,7 @@
 language: ruby
 env: 
-  - CODECLIMATE_REPO_TOKEN=d05b64cdc405df4f1632a3656a1062ea4873a20ff4463732c47c4d811884fde6 
   - CPLUS_INCLUDE_PATH=/usr/include/atlas C_INCLUDE_PATH=/usr/include/atlas
+    CODECLIMATE_REPO_TOKEN=d05b64cdc405df4f1632a3656a1062ea4873a20ff4463732c47c4d811884fde6 
 rvm:
   - "1.9.3"
   - "2.0.0"
