@@ -10,3 +10,8 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
 end
 
+group :development do
+  gem 'flog'
+  gem 'flay'
+end
+
