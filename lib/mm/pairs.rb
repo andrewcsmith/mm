@@ -44,8 +44,9 @@ module MM
       responds_to_arguments vector, [:rank, :shape]
       # Set up the output matrix
       out = get_pairs_output_vector vector
-      out.rank(*pairs_args(out, 1, 0), :reference)[*slice_args(out)]= vector.rank(*pairs_args(vector, 0, 0))
-      out.rank(*pairs_args(out, 1, 1), :reference)[*slice_args(out)]= vector.rank(*pairs_args(vector, 0, 1))
+      [0, 1].each do |i|
+        out.rank(*pairs_args(out, 1, i), :reference)[*slice_args(out)]= vector.rank(*pairs_args(vector, 0, i))
+      end
       out
     end
 

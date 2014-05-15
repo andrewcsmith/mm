@@ -65,6 +65,10 @@ class TestMetric < Minitest::Test
         ]
         assert_equal exp, @metric.intra_delta(pairs)
       end
+      def test_intra_delta_proc
+        @metric.intra_delta = ->(vp) {nil}
+        assert_instance_of Proc, @metric.instance_variable_get(:@intra_delta)
+      end
     end
 
     class TestInterDelta < self
@@ -84,6 +88,10 @@ class TestMetric < Minitest::Test
         exp = [4.5, 8.0]
         assert_equal exp, @metric.inter_delta(@diffs)
       end
+      def test_inter_delta_proc
+        @metric.inter_delta = ->(diffs) {nil}
+        assert_instance_of Proc, @metric.instance_variable_get(:@inter_delta)
+      end
     end
   end
 
@@ -94,6 +102,11 @@ class TestMetric < Minitest::Test
         [5, 4, 3, 6],
         [12, 2, 11, 7]
       ]
+    end
+
+    def test_assigns_scaling_proc
+      @metric.scale = ->(pairs) {}
+      assert_equal Proc, @metric.instance_variable_get(:@scale).class 
     end
 
     def test_gets_no_scaling

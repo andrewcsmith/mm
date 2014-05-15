@@ -15,7 +15,7 @@ module MM
     end
 
     def scale= scale
-      if MM::Scaling.respond_to? scale
+      if scale.is_a?(Symbol) && MM::Scaling.respond_to?(scale)
         @scale = MM::Scaling.method scale
       else
         @scale = scale
@@ -23,7 +23,7 @@ module MM
     end
 
     def intra_delta= intra_delta
-      if MM::Deltas.respond_to? intra_delta
+      if intra_delta.is_a?(Symbol) && MM::Deltas.respond_to?(intra_delta)
         @intra_delta = MM::Deltas.method intra_delta
       else
         @intra_delta = intra_delta
@@ -31,7 +31,7 @@ module MM
     end
 
     def inter_delta= inter_delta
-      if MM::Deltas.respond_to? inter_delta
+      if inter_delta.is_a?(Symbol) && MM::Deltas.respond_to?(inter_delta)
         @inter_delta = MM::Deltas.method inter_delta
       else
         @inter_delta = inter_delta
