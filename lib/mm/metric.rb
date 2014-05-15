@@ -10,32 +10,28 @@ module MM
 
     attr_accessor :ordered
 
+    def protected_use_method mod, var, sym
+      if sym.is_a?(Symbol) && mod.respond_to?(sym)
+        self.instance_variable_set(var, mod.method(sym))
+      else
+        self.instance_variable_set(var, sym)
+      end
+    end
+
     def pair= pair
       @pair = MM::PAIR_FUNCTIONS[pair] || pair
     end
 
     def scale= scale
-      if scale.is_a?(Symbol) && MM::Scaling.respond_to?(scale)
-        @scale = MM::Scaling.method scale
-      else
-        @scale = scale
-      end
+      protected_use_method(MM::Scaling, :@scale, scale)
     end
 
     def intra_delta= intra_delta
-      if intra_delta.is_a?(Symbol) && MM::Deltas.respond_to?(intra_delta)
-        @intra_delta = MM::Deltas.method intra_delta
-      else
-        @intra_delta = intra_delta
-      end
+      protected_use_method(MM::Deltas, :@intra_delta, intra_delta)
     end
 
     def inter_delta= inter_delta
-      if inter_delta.is_a?(Symbol) && MM::Deltas.respond_to?(inter_delta)
-        @inter_delta = MM::Deltas.method inter_delta
-      else
-        @inter_delta = inter_delta
-      end
+      protected_use_method(MM::Deltas, :@inter_delta, inter_delta)
     end
 
     # Returns an Array of a pair of elements, where each is a vector of pairs
