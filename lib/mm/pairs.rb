@@ -80,13 +80,9 @@ module MM
       # set up the output matrix
       NMatrix.new(out_shape, combos.flatten, dtype: vector.dtype, stype: vector.stype)
     end
-  end
 
-  # Some Procs that make things easy to
-  # drop in
-  PAIR_FUNCTIONS = {
-    :linear => ->(x) {Pairs.new.get_adjacent_pairs(x)},
-    :combinatorial => ->(x) {Pairs.new.get_combinatorial_pairs(x)}
-  }
+    alias_method :linear, :get_adjacent_pairs
+    alias_method :combinatorial, :get_combinatorial_pairs
+  end
 end
 

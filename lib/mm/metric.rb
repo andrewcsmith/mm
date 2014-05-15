@@ -19,7 +19,7 @@ module MM
     end
 
     def pair= pair
-      @pair = MM::PAIR_FUNCTIONS[pair] || pair
+      protected_use_method(MM::Pairs.new, :@pair, pair)
     end
 
     def scale= scale
