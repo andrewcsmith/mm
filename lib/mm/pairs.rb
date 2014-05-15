@@ -33,6 +33,10 @@ module MM
       NMatrix.zeros(get_pairs_shape(vector), dtype: vector.dtype, stype: vector.stype)
     end
 
+    def pairs_args v, i, j
+      [i, (j...(v.shape[i] - 1 + j))]
+    end
+
     # Adjacent pairs of an NMatrix's outermost dimension
     # Optimized for use with large NMatrix objects (anything over 10 elements)
     # Note that all matrics must be the same size
@@ -40,8 +44,8 @@ module MM
       responds_to_arguments vector, [:rank, :shape]
       # Set up the output matrix
       out = get_pairs_output_vector vector
-      out.rank(1, 0...out.shape[1]-1, :reference)[*slice_args(out)]= vector.rank(0, 0...vector.shape[0]-1)
-      out.rank(1, 1...out.shape[1], :reference)[*slice_args(out)]= vector.rank(0, 1...vector.shape[0])
+      out.rank(*pairs_args(out, 1, 0), :reference)[*slice_args(out)]= vector.rank(*pairs_args(vector, 0, 0))
+      out.rank(*pairs_args(out, 1, 1), :reference)[*slice_args(out)]= vector.rank(*pairs_args(vector, 0, 1))
       out
     end
 
