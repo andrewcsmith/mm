@@ -18,7 +18,7 @@ Hoe.spec "mm" do |h|
   developer("Andrew C. Smith", "andrewchristophersmith@gmail.com")
   license "MIT" # this should match the license in the README
   self.readme_file = "README.rdoc"
-  h.test_prelude = <<CC
+  self.test_prelude = <<CC
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 CC
