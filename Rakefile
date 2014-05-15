@@ -14,16 +14,15 @@ Hoe.plugin :travis
 Hoe.plugin :inline
 Hoe.plugin :minitest
 
-Hoe.spec "mm" do |h|
+hoe = Hoe.spec "mm" do |h|
   developer("Andrew C. Smith", "andrewchristophersmith@gmail.com")
   license "MIT" # this should match the license in the README
   self.readme_file = "README.rdoc"
-  self.test_prelude = <<CC
+end
+
+hoe.test_prelude = <<CC
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 CC
-end
-
-
 
 # vim: syntax=ruby
