@@ -81,10 +81,10 @@ module MM
       NMatrix.new(out_shape, combos.flatten, dtype: vector.dtype, stype: vector.stype)
     end
 
+    # Vectorized, slice-assignment alternate implementation to get combinatorial pairs
+    # Should be much faster on large matrices, because it doesn't convert back
+    # and forth to Array.
     def get_combinatorial_pairs_nmatrix(vector)
-      unless vector.is_a? NMatrix
-        raise ArgumentError, "#get_combinatorial_pairs_nmatrix expects NMatrix argument"
-      end
       out = get_pairs_output_vector vector, :combinatorial
       (0...vector.shape[0]-1).each do |i|
         vs = vector.shape[0]
@@ -93,13 +93,13 @@ module MM
         # Ranges are exclusive
         end_range = start_range + vector.shape[0] - 1 - i
         # puts out.inspect
+        # Assignment vector for the right-side pairs
         assign = vector.rank(0, (i+1)...vector.shape[0])
         # puts "#{start_range}...#{end_range}"
-        # TODO: Generalize these lines to work for multiple dimensions
         o = out.rank(1, 0, :reference)
-        o[start_range...end_range]= vector[i] 
+        o[start_range...end_range, *slice_args(out).drop(1)] = vector.rank(0, i) 
         o = out.rank(1, 1, :reference)
-        o[start_range...end_range] = assign
+        o[start_range...end_range, *slice_args(out).drop(1)] = assign
       end
       # puts out
       out

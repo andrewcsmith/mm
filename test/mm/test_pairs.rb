@@ -126,6 +126,18 @@ class TestMMPairs < Minitest::Test
     @exp = N[[0, 1], [0, 2], [1, 2]]
     assert_equal @exp, @pairs.get_combinatorial_pairs_nmatrix(@m)
   end
+
+  def test_combinatorial_pairs_nmatrix_two_d
+    @m = ::NMatrix.seq([3, 2])
+    @exp_array = [
+      [[0, 1], [2, 3]],
+      [[0, 1], [4, 5]],
+      [[2, 3], [4, 5]]
+    ]
+    @exp = NMatrix.new([3, 2, 2], @exp_array.flatten)
+    assert_equal @exp, @pairs.get_combinatorial_pairs_nmatrix(@m)
+  end
+
 end
 
 class TestTwoDimensionalArray < Minitest::Test
