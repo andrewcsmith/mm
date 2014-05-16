@@ -116,6 +116,18 @@ class TestOneDimensionalArray < Minitest::Test
   end
 end
 
+class TestMMPairs < Minitest::Test
+  def setup
+    @pairs = MM::Pairs.new
+    @m = N[0, 1, 2]
+  end
+
+  def test_combinatorial_pairs_nmatrix
+    @exp = N[[0, 1], [0, 2], [1, 2]]
+    assert_equal @exp, @pairs.get_combinatorial_pairs_nmatrix(@m)
+  end
+end
+
 class TestTwoDimensionalArray < Minitest::Test
   def setup
     @pairs = MM::Pairs.new

@@ -29,8 +29,8 @@ module MM
       out.shape.map {:*}
     end
 
-    def get_pairs_output_vector vector
-      NMatrix.zeros(get_pairs_shape(vector), dtype: vector.dtype, stype: vector.stype)
+    def get_pairs_output_vector vector, type = :adjacent
+      NMatrix.zeros(get_pairs_shape(vector, type), dtype: vector.dtype, stype: vector.stype)
     end
 
     def pairs_args v, i, j
@@ -79,6 +79,30 @@ module MM
       out_shape = get_pairs_shape(vector, :combinatorial)
       # set up the output matrix
       NMatrix.new(out_shape, combos.flatten, dtype: vector.dtype, stype: vector.stype)
+    end
+
+    def get_combinatorial_pairs_nmatrix(vector)
+      unless vector.is_a? NMatrix
+        raise ArgumentError, "#get_combinatorial_pairs_nmatrix expects NMatrix argument"
+      end
+      out = get_pairs_output_vector vector, :combinatorial
+      (0...vector.shape[0]-1).each do |i|
+        vs = vector.shape[0]
+        # For shape[0]==3, returns starting indices 0, 3, 5
+        start_range = (vs.downto(vs-i).inject(0, :+) - vs)
+        # Ranges are exclusive
+        end_range = start_range + vector.shape[0] - 1 - i
+        # puts out.inspect
+        assign = vector.rank(0, (i+1)...vector.shape[0])
+        # puts "#{start_range}...#{end_range}"
+        # TODO: Generalize these lines to work for multiple dimensions
+        o = out.rank(1, 0, :reference)
+        o[start_range...end_range]= vector[i] 
+        o = out.rank(1, 1, :reference)
+        o[start_range...end_range] = assign
+      end
+      # puts out
+      out
     end
 
     alias_method :linear, :get_adjacent_pairs
