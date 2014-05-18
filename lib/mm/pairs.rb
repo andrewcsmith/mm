@@ -81,27 +81,37 @@ module MM
       NMatrix.new(out_shape, combos.flatten, dtype: vector.dtype, stype: vector.stype)
     end
 
+    def get_combinatorial_range(vs, i)
+      # For shape[0]==3, returns starting indices 0, 3, 5
+      start_range = (vs.downto(vs-i).inject(0, :+) - vs)
+      # Ranges are exclusive
+      end_range = start_range + vs - 1 - i
+      [start_range, end_range]
+    end
+
+    def assign_range_slice out, assign, element, range
+      out.rank(1, element, :reference)[range[0]...range[1], *slice_args(out).drop(1)] = assign
+    end
+
     # Vectorized, slice-assignment alternate implementation to get combinatorial pairs
     # Should be much faster on large matrices, because it doesn't convert back
     # and forth to Array.
     def get_combinatorial_pairs_nmatrix(vector)
+      # Initialize the output vector
       out = get_pairs_output_vector vector, :combinatorial
-      (0...vector.shape[0]-1).each do |i|
-        vs = vector.shape[0]
-        # For shape[0]==3, returns starting indices 0, 3, 5
-        start_range = (vs.downto(vs-i).inject(0, :+) - vs)
-        # Ranges are exclusive
-        end_range = start_range + vector.shape[0] - 1 - i
-        # puts out.inspect
-        # Assignment vector for the right-side pairs
-        assign = vector.rank(0, (i+1)...vector.shape[0])
-        # puts "#{start_range}...#{end_range}"
-        o = out.rank(1, 0, :reference)
-        o[start_range...end_range, *slice_args(out).drop(1)] = vector.rank(0, i) 
-        o = out.rank(1, 1, :reference)
-        o[start_range...end_range, *slice_args(out).drop(1)] = assign
+      # Shorthand for the number of elements
+      vs = vector.shape[0]
+
+      # Iterates through each element in the original vector
+      (0...vs-1).each do |i|
+        # The range of elements in the output we will be modifying
+        r = get_combinatorial_range(vs, i)
+        # Assigns the primary element in each pair
+        assign_range_slice(out, vector.rank(0, i), 0, r)
+        # Assigns the comparison element in each pair
+        comparison = 
+        assign_range_slice(out, vector.rank(0, (i+1)...vs), 1, r)
       end
-      # puts out
       out
     end
 
