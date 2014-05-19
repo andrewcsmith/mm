@@ -15,7 +15,7 @@ module MM
       out_shape
     end
 
-    def responds_to_arguments arg, methods
+    def responds_to_arguments(arg, methods)
       methods.each do |x|
         if !arg.respond_to? x
           raise ArgumentError, "#{arg.class} does not implement #{x}"
@@ -23,17 +23,16 @@ module MM
       end
     end
 
-    # Gets the arguments to assign a
-    # full slice
-    def slice_args out
+    # Gets the arguments to assign a full slice
+    def slice_args(out)
       out.shape.map {:*}
     end
 
-    def get_pairs_output_vector vector, type = :adjacent
+    def get_pairs_output_vector(vector, type = :adjacent)
       NMatrix.zeros(get_pairs_shape(vector, type), dtype: vector.dtype, stype: vector.stype)
     end
 
-    def pairs_args v, i, j
+    def pairs_args(v, i, j)
       [i, (j...(v.shape[i] - 1 + j))]
     end
 
@@ -89,7 +88,7 @@ module MM
       [start_range, end_range]
     end
 
-    def assign_range_slice out, assign, element, range
+    def assign_range_slice(out, assign, element, range)
       out.rank(1, element, :reference)[range[0]...range[1], *slice_args(out).drop(1)] = assign
     end
 
@@ -101,7 +100,7 @@ module MM
       out = get_pairs_output_vector vector, :combinatorial
       # Shorthand for the number of elements
       vs = vector.shape[0]
-
+      
       # Iterates through each element in the original vector
       (0...vs-1).each do |i|
         # The range of elements in the output we will be modifying
@@ -109,7 +108,6 @@ module MM
         # Assigns the primary element in each pair
         assign_range_slice(out, vector.rank(0, i), 0, r)
         # Assigns the comparison element in each pair
-        comparison = 
         assign_range_slice(out, vector.rank(0, (i+1)...vs), 1, r)
       end
       out
