@@ -1,6 +1,5 @@
 module MM
   VERSION = "1.0.0"
-  
 end
 
 require 'mm/pairs.rb'

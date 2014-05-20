@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'nmatrix', '0.1.0.rc4', :git => 'https://github.com/SciRuby/nmatrix.git',
-:branch => 'master' 
 gem 'hoe-travis'
+gem 'rake-compiler'
 
 group :test do
   gem 'minitest', '~> 5.0'
@@ -13,6 +12,5 @@ end
 group :development do
   gem 'flog'
   gem 'flay'
-  gem 'ZenTest'
 end
 

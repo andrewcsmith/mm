@@ -1,165 +1,35 @@
 # require "minitest/autorun"
-
 require "mm/pairs"
-require "helpers/adjacent_pairs_tests.rb"
-
-class TestOneDimensionalNMatrix < Minitest::Test
-  def setup
-    @pairs = MM::Pairs.new
-    @m = ::NMatrix.seq([3])
-  end
-
-  class TestAdjacentPairs < self 
-    def setup
-      super
-      @exp_array = [[0, 1], [1, 2]]
-      @exp = NMatrix.new([2, 2], @exp_array.flatten)
-    end
-    include VMSanityTests
-    include AdjacentPairsTests
-  end
-
-  class TestCombinatorialPairs < self 
-    def setup
-      super
-      @exp_array = [[0, 1], [0, 2], [1, 2]]
-      @exp = NMatrix.new([3, 2], @exp_array.flatten)
-    end
-    include VMSanityTests
-    include CombinatorialPairsTests
-  end
-end
-
-class TestTwoDimensionalNMatrix < Minitest::Test
-  def setup
-    @pairs = MM::Pairs.new
-    @m = ::NMatrix.seq([3, 2])
-  end
-
-  class TestAdjacentPairs < self
-    def setup
-      super
-      @exp_array = [[[0, 1], [2, 3]], [[2, 3], [4, 5]]]
-      @exp = NMatrix.new([2, 2, 2], @exp_array.flatten)
-    end
-    include VMSanityTests
-    include AdjacentPairsTests
-  end
-
-  class TestCombinatorialPairs < self
-    def setup
-      super
-      @exp_array = [
-        [[0, 1], [2, 3]],
-        [[0, 1], [4, 5]],
-        [[2, 3], [4, 5]]
-      ]
-      @exp = NMatrix.new([3, 2, 2], @exp_array.flatten)
-    end
-    include VMSanityTests
-    include CombinatorialPairsTests
-  end
-end
-
-class TestThreeDimensionalNMatrix < Minitest::Test
-  def setup
-    @pairs = MM::Pairs.new
-    @m = ::NMatrix.seq([4,3,2])
-  end
-
-  class TestAdjacentPairs < self
-    def setup
-      super
-      @exp_array = [
-        [[[0, 1], [2, 3], [4, 5]], [[6, 7], [8, 9], [10, 11]]],
-        [[[6, 7], [8, 9], [10, 11]], [[12, 13], [14, 15], [16, 17]]],
-        [[[12, 13], [14, 15], [16, 17]], [[18, 19], [20, 21], [22, 23]]]
-      ]
-      @exp = NMatrix.new([3, 2, 3, 2], @exp_array.flatten)
-    end
-    include AdjacentPairsTests
-    include VMSanityTests
-  end
-
-  # TODO: Implement combinatorial pairs in 3 dimension
-end
-
-class TestOneDimensionalArray < Minitest::Test
-  def setup
-    @pairs = MM::Pairs.new
-    @m = [0, 1, 2]
-  end
-
-  class TestAdjacentPairs < self
-    def setup
-      super
-      @exp = [[0, 1], [1, 2]]
-    end
-
-    include AdjacentPairsTests
-
-    alias :old_test_gets_adjacent_pairs_large :test_gets_adjacent_pairs_large
-    def test_gets_adjacent_pairs_large
-      assert_raises(ArgumentError) do 
-        old_test_gets_adjacent_pairs_large
-      end
-    end
-  end
-
-  class TestCombinatorialPairs < self
-    def setup
-      super
-      @exp = [[0, 1], [0, 2], [1, 2]]
-    end
-
-    include CombinatorialPairsTests
-  end
-end
 
 class TestMMPairs < Minitest::Test
   def setup
     @pairs = MM::Pairs.new
-    @m = N[0, 1, 2]
   end
 
-  def test_combinatorial_pairs_nmatrix
-    @exp = N[[0, 1], [0, 2], [1, 2]]
-    assert_equal @exp, @pairs.get_combinatorial_pairs_nmatrix(@m)
+  def test_responds_to_arguments_validates_true
+    assert @pairs.responds_to_arguments([], [:each, :[]])
   end
 
-  def test_combinatorial_pairs_nmatrix_two_d
-    @m = ::NMatrix.seq([3, 2])
-    @exp_array = [
-      [[0, 1], [2, 3]],
-      [[0, 1], [4, 5]],
-      [[2, 3], [4, 5]]
-    ]
-    @exp = NMatrix.new([3, 2, 2], @exp_array.flatten)
-    assert_equal @exp, @pairs.get_combinatorial_pairs_nmatrix(@m)
-  end
-
-end
-
-class TestTwoDimensionalArray < Minitest::Test
-  def setup
-    @pairs = MM::Pairs.new
-    @m = [[0, 1], [2, 3], [4, 5]]
-  end
-   
-  class TestAdjacentPairs < self
-    def setup
-      super
-      @exp = [[[0, 1], [2, 3]], [[2, 3], [4, 5]]]
+  def test_responds_to_arguments_raises_exception
+    assert_raises(ArgumentError) do
+      @pairs.responds_to_arguments([], [:lol])
     end
-    
-    include AdjacentPairsTests
-    
-    alias :old_test_gets_adjacent_pairs_large :test_gets_adjacent_pairs_large
-    def test_gets_adjacent_pairs_large
-      assert_raises(ArgumentError) do 
-        old_test_gets_adjacent_pairs_large
-      end
-    end
+  end
+
+  def test_get_adjacent_pairs_flat_array
+    assert_equal [[0, 1], [1, 2], [2, 3]], @pairs.get_adjacent_pairs([0, 1, 2, 3])
+  end
+
+  def test_get_adjacent_pairs_nested_array
+    assert_equal [[[0, 1], [2, 3]], [[2, 3], [4, 5]]], @pairs.get_adjacent_pairs([[0, 1], [2, 3], [4, 5]])
+  end
+
+  def test_get_combinatorial_pairs_flat_array
+    assert_equal [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]], @pairs.get_combinatorial_pairs([0, 1, 2, 3])
+  end
+  
+  def test_get_combinatorial_pairs_nested_array
+    assert_equal [[[0, 1], [2, 3]], [[0, 1], [4, 5]], [[2, 3], [4, 5]]], @pairs.get_combinatorial_pairs([[0, 1], [2, 3], [4, 5]])
   end
 end
 
