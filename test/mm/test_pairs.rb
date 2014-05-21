@@ -1,7 +1,9 @@
 # require "minitest/autorun"
 require "mm/pairs"
 
-class TestMMPairs < Minitest::Test
+class TestMM < Minitest::Test; end
+
+class TestMM::TestPairs < Minitest::Test
   def setup
     @pairs = MM::Pairs.new
   end

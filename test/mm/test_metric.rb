@@ -2,14 +2,16 @@ require 'minitest/autorun'
 
 require 'mm/metric'
 
-class TestMetric < Minitest::Test
+class TestMM < Minitest::Test; end
+
+class TestMM::TestMetric < Minitest::Test
   def setup
     @ordered ||= true
     @pair ||= :linear
     @scale ||= :none
     @intra_delta ||= :abs
     @inter_delta ||= :abs
-    @metric = MM::Metric.new(@ordered, @pair, @scale, @intra_delta, @inter_delta)
+    @metric = MM::Metric.new(ordered: @ordered, pair: @pair, scale: @scale, intra_delta: @intra_delta, inter_delta: @inter_delta)
 
     # Setting up the sample vectors for many of the examples
     @v1 = [1, 6, 2, 5, 11]
@@ -66,7 +68,7 @@ class TestMetric < Minitest::Test
         assert_equal exp, @metric.intra_delta(pairs)
       end
       def test_intra_delta_proc
-        @metric.intra_delta = ->(vp) {nil}
+        @metric.intra_delta = ->(*vp) {nil}
         assert_instance_of Proc, @metric.instance_variable_get(:@intra_delta)
       end
     end
@@ -89,7 +91,7 @@ class TestMetric < Minitest::Test
         assert_equal exp, @metric.inter_delta(@diffs)
       end
       def test_inter_delta_proc
-        @metric.inter_delta = ->(diffs) {nil}
+        @metric.inter_delta = ->(*diffs) {nil}
         assert_instance_of Proc, @metric.instance_variable_get(:@inter_delta)
       end
     end
@@ -144,8 +146,27 @@ class TestMetric < Minitest::Test
   end
 
   class TestMagnitudeMetric < self
-    def test_ordered_linear
-      assert_equal 4.5, @metric.call(@v1, @v2)
+    @exp = {
+      :olm => {:no_scaling => 4.5, :abs_scaling => 0.375},
+      :ocm => {:no_scaling => 5.2, :abs_scaling => 0.4},
+      :ulm => {:no_scaling => 3.5, :abs_scaling => 0.28167},
+      :ucm => {:no_scaling => 2.4, :abs_scaling => 0.1846},
+      :old => {:no_scaling => 0.25},
+      :ocd => {:no_scaling => 0.25},
+      :uld => {:no_scaling => 0.4},
+      :ucd => {:no_scaling => 0.4}
+    }
+    @exp.each do |metric, expected|
+      define_method("test_#{metric}_shorthand") do
+        m = ::MM::Metric.send(metric)
+        assert_in_delta expected[:no_scaling], m.call(@v1, @v2), 0.001
+      end
+      if expected[:abs_scaling]
+        define_method("test_#{metric}_shorthand_mutable_args") do
+          m = ::MM::Metric.send(metric, {:scale => :absolute})
+          assert_in_delta expected[:abs_scaling], m.call(@v1, @v2), 0.001
+        end
+      end
     end
   end
 end
