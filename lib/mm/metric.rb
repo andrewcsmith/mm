@@ -1,3 +1,5 @@
+require 'yaml'
+
 module MM
   class Metric
     def initialize(ordered: true, pair: nil, scale: nil, intra_delta: nil, inter_delta: nil, **options)
@@ -108,17 +110,7 @@ module MM
     # ::ocd
     # ::uld
     # ::ucd
-    #
-    METHOD_SHORTCUTS = {
-      :olm => {:ordered => true, :pair => :linear, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
-      :ocm => {:ordered => true, :pair => :combinatorial, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
-      :ulm => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :abs, :inter_delta => :mean},
-      :ucm => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :abs, :inter_delta => :mean},
-      :old => {:ordered => true, :pair => :linear, :scale => :none, :intra_delta => :direction, :inter_delta => :abs},
-      :ocd => {:ordered => true, :pair => :combinatorial, :scale => :none, :intra_delta => :direction, :inter_delta => :abs},
-      :uld => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :direction, :inter_delta => :mean},
-      :ucd => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :direction, :inter_delta => :mean}
-    }
+    METHOD_SHORTCUTS = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'shortcuts.yml')))
 
     class << self
       METHOD_SHORTCUTS.each do |k, v|
