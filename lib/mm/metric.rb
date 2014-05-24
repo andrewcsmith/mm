@@ -7,7 +7,6 @@ module MM
       self.intra_delta = intra_delta
       self.inter_delta = inter_delta
       @options = options
-      @scale_size = 1.0
     end
 
     attr_accessor :ordered
@@ -38,9 +37,7 @@ module MM
 
     # Returns an Array of a pair of elements, where each is a vector of pairs
     def get_pairs v1, v2
-      pairs = [v1, v2].map {|x| @pair.call(x)}
-      @scale_size = @ordered ? pairs[0].size : 1.0
-      pairs
+      [v1, v2].map {|x| @pair.call(x)}
     end
 
     # Applies the delta to each pair of elements in a collection
@@ -51,16 +48,7 @@ module MM
     # Returns the vector_deltas, which is the difference between each pair of
     # elements in a given vector.
     def intra_delta vp
-      vp.map {|x| x.map {|n| @intra_delta.call(*n)}}
-    end
-
-    # Applies to elements at the same index over either collection
-    def inter_delta diffs
-      if @ordered
-        return diffs[0].zip(diffs[1]).map {|x| @inter_delta.call(*x)}
-      else
-        diffs.map {|x| x.inject(0, :+).to_f / x.size}
-      end
+      vp.map {|x| x.map {|n| @intra_delta.call(n)}}
     end
 
     # Method, so that if you want to subclass Metric you totally can
@@ -68,19 +56,32 @@ module MM
       @scale.call pairs
     end
 
-    # Performs final summing and scaling on the output of inter_delta.
-    # Can be overwritten when subclassed, in case you want to use a 
-    # different method of averaging (sum of squares, etc.)
+    # Applies to elements at the same index over either collection.
+    # Accepts a series of vectors, either a sequence of pairs or two full
+    # collections, and reduces them to a single vector. Does not do any scaling.
+    def inter_delta diffs
+      if @ordered
+        unless diffs[0].size == diffs[1].size
+          raise ArgumentError, "Ordered Metrics require identically vector pair sequences of identical length."
+        end
+        # Ordered Metrics take the mean of differences
+        Deltas.mean(diffs[0].zip(diffs[1]).map {|x| @inter_delta.call x})
+      else
+        # Unordered Metrics take the difference of means
+        Deltas.abs(diffs.map {|x| @inter_delta.call x})
+      end
+    end
+
+    # Performs final averaging on the output of inter_delta. Can be overwritten
+    # when subclassed, in case you want to use a different method of averaging
+    # (sum of squares, etc.)
     #
     # diffs - [#reduce] The vector of the differences between
     #   the two vector deltas. Essentially the output of inter_delta.
     #
-    # size - [Numeric] The size to divide by. Usually the size
-    #   of one of the vector_deltas.
-    #
     # Returns distance [Numeric] The distance calculated by the diff
     def post_scale diffs
-      diffs.reduce(0, :+).to_f / @scale_size
+      diffs.reduce(0, :+).to_f / diffs.size
     end
 
     # Gets the distance between two vectors, according to the Metric object.
@@ -95,10 +96,7 @@ module MM
     # == Returns:
     # A float distance between the two vectors.
     def call v1, v2
-      pairs = get_pairs(v1, v2)
-      vector_deltas = scale(intra_delta(pairs))
-      diffs = inter_delta(vector_deltas)
-      post_scale diffs
+      inter_delta(scale(intra_delta(get_pairs(v1, v2))))
     end
 
     ### CONVENIENCE CREATION METHODS ###
@@ -114,12 +112,12 @@ module MM
     METHOD_SHORTCUTS = {
       :olm => {:ordered => true, :pair => :linear, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
       :ocm => {:ordered => true, :pair => :combinatorial, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
-      :ulm => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
-      :ucm => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :abs, :inter_delta => :abs},
+      :ulm => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :abs, :inter_delta => :mean},
+      :ucm => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :abs, :inter_delta => :mean},
       :old => {:ordered => true, :pair => :linear, :scale => :none, :intra_delta => :direction, :inter_delta => :abs},
       :ocd => {:ordered => true, :pair => :combinatorial, :scale => :none, :intra_delta => :direction, :inter_delta => :abs},
-      :uld => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :direction, :inter_delta => :abs},
-      :ucd => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :direction, :inter_delta => :abs}
+      :uld => {:ordered => false, :pair => :linear, :scale => :none, :intra_delta => :direction, :inter_delta => :mean},
+      :ucd => {:ordered => false, :pair => :combinatorial, :scale => :none, :intra_delta => :direction, :inter_delta => :mean}
     }
 
     class << self
@@ -129,11 +127,6 @@ module MM
         end
       end
     end
-    
-    # def self.olm(scale = :none, intra_delta = :abs, inter_delta = :abs)
-    #   self.new(true, :linear, scale, intra_delta, inter_delta)
-    # end
-
   end
 end
 

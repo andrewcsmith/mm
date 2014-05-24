@@ -82,13 +82,8 @@ class TestMM::TestMetric < Minitest::Test
         ]
       end
       def test_gets_inter_delta_ordered
-        exp = [7, 2, 8, 1]
+        exp = 4.5
         assert_equal exp, @metric.inter_delta(@diffs) 
-      end
-      def test_gets_inter_delta_unordered
-        @metric.ordered = false
-        exp = [4.5, 8.0]
-        assert_equal exp, @metric.inter_delta(@diffs)
       end
       def test_inter_delta_proc
         @metric.inter_delta = ->(*diffs) {nil}
@@ -149,20 +144,22 @@ class TestMM::TestMetric < Minitest::Test
     @exp = {
       :olm => {:no_scaling => 4.5, :abs_scaling => 0.375},
       :ocm => {:no_scaling => 5.2, :abs_scaling => 0.4},
-      :ulm => {:no_scaling => 3.5, :abs_scaling => 0.28167},
+      :ulm => {:no_scaling => 3.5, :abs_scaling => 0.29167},
       :ucm => {:no_scaling => 2.4, :abs_scaling => 0.1846},
       :old => {:no_scaling => 0.25},
-      :ocd => {:no_scaling => 0.25},
-      :uld => {:no_scaling => 0.4},
+      :ocd => {:no_scaling => 0.4},
+      :uld => {:no_scaling => 0.25},
       :ucd => {:no_scaling => 0.4}
     }
     @exp.each do |metric, expected|
-      define_method("test_#{metric}_shorthand") do
+      define_method("test_#{metric}_shorthand_no_scaling") do
+        # skip("not implemented.")
         m = ::MM::Metric.send(metric)
         assert_in_delta expected[:no_scaling], m.call(@v1, @v2), 0.001
       end
       if expected[:abs_scaling]
-        define_method("test_#{metric}_shorthand_mutable_args") do
+        define_method("test_#{metric}_shorthand_abs_scaling") do
+          # skip("not implemented.")
           m = ::MM::Metric.send(metric, {:scale => :absolute})
           assert_in_delta expected[:abs_scaling], m.call(@v1, @v2), 0.001
         end
