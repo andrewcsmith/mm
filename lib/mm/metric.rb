@@ -2,21 +2,36 @@ require 'yaml'
 
 module MM
   class Metric
-    # Initialization method for the Metric object.
+    # Constructor for the Metric object.
     #
-    #
-    def initialize(ordered: true, pair: nil, scale: nil, intra_delta: nil, inter_delta: nil, **options)
+    # ordered - [Boolean] 
+    #   Controls whether metric is ordered
+    # pair - [Symbol, #call] 
+    #   Method of +MM::Deltas+, or where +Object#call+ returns an +Array+ of
+    #   pairs.
+    # scale - [Symbol, #call] 
+    #   Method of +MM::Scaling+, or where +Object#call+ returns a scaled diff
+    #   +Array+
+    # intra_delta - [Symbol, #call] 
+    #   Method of +MM::Deltas+, or where +Object#call+ returns +Array+ of
+    #   differences between pairs of elements
+    # inter_delta - [Symbol, #call] 
+    #   Method of +MM::Deltas+, or where +Object#call+ returns +Array+ of
+    #   differences between the diffs of the two input morphologies
+    # 
+    def initialize(ordered: true, pair: nil, scale: nil, intra_delta: nil, inter_delta: nil)
       @ordered = ordered
       self.pair = pair
       self.scale = scale
       self.intra_delta = intra_delta
       self.inter_delta = inter_delta
-      @options = options
     end
 
     attr_accessor :ordered
 
-    # Public: Gets the distance between two vectors, according to the Metric object.
+    # Public: Gets the distance between two vectors, according to the Metric
+    # object. Since +Metric+ can be duck-typed to work with +intra_delta+ and
+    # +inter_delta+, it should be possible to nest +Metric+ objects.
     #
     # v1 - The vector to call on.
     # v2 - The vector to compare against.
@@ -30,10 +45,11 @@ module MM
 
     # Public: Setter method for pair.
     #
-    # pair - Either a Proc that can process the pairs, or a Symbol to look up in
-    #   an instance of MM::Pairs
+    # pair - [Symbol, #call] 
+    #   Method of +MM::Deltas+, or where +Object#call+ returns an +Array+ of
+    #   pairs.
     #
-    # Returns pair.
+    # Returns a [Proc] pair.
     def pair= pair
       protected_use_method(MM::Pairs.new, :@pair, pair)
     end
@@ -61,7 +77,7 @@ module MM
     # Public: Setter method for inter_delta.
     #
     # inter_delta - Either a Proc that can process as an inter_delta, or a
-    #   Symbol where <tt>MM::Deltas.respond_to? Symbol == true</tt>
+    #   Symbol where +MM::Deltas.respond_to? Symbol == true+
     #
     # Returns itself. Sets the instance variable @inter_delta.
     def inter_delta= inter_delta
@@ -113,13 +129,9 @@ module MM
     # Returns a single vector of the diffs between the two.
     def inter_delta diffs
       if @ordered
-        unless diffs[0].size == diffs[1].size
-          raise ArgumentError, "Ordered Metrics require identically vector pair sequences of identical length."
-        end
         # Ordered Metrics take the mean of differences
         Deltas.mean(diffs[0].zip(diffs[1]).map {|x| @inter_delta.call x})
       else
-        # Unordered Metrics take the difference of means
         Deltas.abs(diffs.map {|x| @inter_delta.call x})
       end
     end
@@ -144,7 +156,7 @@ module MM
     # var - instance variable to assign to.
     # sym - Symbol to lookup in mod's exposed methods.
     #
-    # Returns <tt>sym</tt>.
+    # Returns +sym+.
     def protected_use_method mod, var, sym
       if sym.is_a?(Symbol) && mod.respond_to?(sym)
         self.instance_variable_set(var, mod.method(sym))
