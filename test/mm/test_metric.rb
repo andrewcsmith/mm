@@ -33,7 +33,7 @@ class TestMM::TestMetric < Minitest::Test
           [[1, 6], [6, 2], [2, 5], [5, 11]],
           [[3, 15], [15, 13], [13, 2], [2, 9]]
         ]
-        assert_equal exp, @metric.get_pairs(@v1, @v2)
+        assert_equal exp, @metric.send(:get_pairs, @v1, @v2)
       end
     end
 
@@ -49,7 +49,7 @@ class TestMM::TestMetric < Minitest::Test
           [[3, 15], [3, 13], [3, 2], [3, 9], [15, 13], [15, 2],
             [15, 9], [13, 2], [13, 9], [2, 9]]
         ]
-        assert_equal exp, @metric.get_pairs(@v1, @v2)
+        assert_equal exp, @metric.send(:get_pairs, @v1, @v2)
       end
     end
   end
@@ -65,7 +65,7 @@ class TestMM::TestMetric < Minitest::Test
           [5, 4, 3, 6],
           [12, 2, 11, 7]
         ]
-        assert_equal exp, @metric.intra_delta(pairs)
+        assert_equal exp, @metric.send(:intra_delta, pairs)
       end
       def test_intra_delta_proc
         @metric.intra_delta = ->(*vp) {nil}
@@ -83,7 +83,7 @@ class TestMM::TestMetric < Minitest::Test
       end
       def test_gets_inter_delta_ordered
         exp = 4.5
-        assert_equal exp, @metric.inter_delta(@diffs) 
+        assert_equal exp, @metric.send(:inter_delta, @diffs) 
       end
       def test_inter_delta_proc
         @metric.inter_delta = ->(*diffs) {nil}
@@ -103,11 +103,12 @@ class TestMM::TestMetric < Minitest::Test
 
     def test_assigns_scaling_proc
       @metric.scale = ->(pairs) {}
-      assert_equal Proc, @metric.instance_variable_get(:@scale).class 
+      scale = @metric.instance_variable_get :@scale
+      assert_equal Proc, scale.class 
     end
 
     def test_gets_no_scaling
-      assert_equal @unscaled, @metric.scale(@unscaled)
+      assert_equal @unscaled, @metric.send(:scale, @unscaled)
     end
 
     # TODO: This is a complicated test and I don't like it
@@ -117,7 +118,7 @@ class TestMM::TestMetric < Minitest::Test
         [0.417, 0.333, 0.25, 0.5],
         [1.0, 0.167, 0.917, 0.583]
       ]
-      actual = @metric.scale(@unscaled)
+      actual = @metric.send :scale, @unscaled
       actual.each_with_index do |v, i|
         v.each_with_index do |w, j|
           assert_in_delta @exp[i][j], w, 0.001 
@@ -131,7 +132,7 @@ class TestMM::TestMetric < Minitest::Test
         [0.833, 0.667, 0.5, 1.0],
         [1.0, 0.167, 0.917, 0.583]
       ]
-      actual = @metric.scale(@unscaled)
+      actual = @metric.send :scale, @unscaled
       actual.each_with_index do |v, i|
         v.each_with_index do |w, j|
           assert_in_delta @exp[i][j], w, 0.001 
@@ -141,27 +142,24 @@ class TestMM::TestMetric < Minitest::Test
   end
 
   class TestMagnitudeMetric < self
+    # Definitions of expected results
     @exp = {
-      :olm => {:no_scaling => 4.5, :abs_scaling => 0.375},
-      :ocm => {:no_scaling => 5.2, :abs_scaling => 0.4},
-      :ulm => {:no_scaling => 3.5, :abs_scaling => 0.29167},
-      :ucm => {:no_scaling => 2.4, :abs_scaling => 0.1846},
-      :old => {:no_scaling => 0.25},
-      :ocd => {:no_scaling => 0.4},
-      :uld => {:no_scaling => 0.25},
-      :ucd => {:no_scaling => 0.4}
+      :olm => {:scale_none => 4.5, :scale_absolute => 0.375},
+      :ocm => {:scale_none => 5.2, :scale_absolute => 0.4},
+      :ulm => {:scale_none => 3.5, :scale_absolute => 0.29167},
+      :ucm => {:scale_none => 2.4, :scale_absolute => 0.1846},
+      :old => {:scale_none => 0.25},
+      :ocd => {:scale_none => 0.4},
+      :uld => {:scale_none => 0.25},
+      :ucd => {:scale_none => 0.4}
     }
+
     @exp.each do |metric, expected|
-      define_method("test_#{metric}_shorthand_no_scaling") do
-        # skip("not implemented.")
-        m = ::MM::Metric.send(metric)
-        assert_in_delta expected[:no_scaling], m.call(@v1, @v2), 0.001
-      end
-      if expected[:abs_scaling]
-        define_method("test_#{metric}_shorthand_abs_scaling") do
-          # skip("not implemented.")
-          m = ::MM::Metric.send(metric, {:scale => :absolute})
-          assert_in_delta expected[:abs_scaling], m.call(@v1, @v2), 0.001
+      expected.each do |scaling, e|
+        define_method "test_#{metric}_#{scaling}" do
+          m = ::MM::Metric.send(metric)
+          m.scale = /_(.*)$/.match(scaling)[1].to_sym
+          assert_in_delta e, m.call(@v1, @v2), 0.001
         end
       end
     end
