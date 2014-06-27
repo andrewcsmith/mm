@@ -107,12 +107,12 @@ class TestMM::TestMetric < Minitest::Test
       assert_equal Proc, scale.class 
     end
 
-    def test_gets_no_scaling
+    def test_no_scaling
       assert_equal @unscaled, @metric.send(:scale, @unscaled)
     end
 
     # TODO: This is a complicated test and I don't like it
-    def test_gets_absolute_scaling
+    def test_absolute_scaling
       @metric.scale = :absolute
       @exp = [
         [0.417, 0.333, 0.25, 0.5],
@@ -126,7 +126,7 @@ class TestMM::TestMetric < Minitest::Test
       end
     end
 
-    def test_gets_relative_scaling
+    def test_relative_scaling
       @metric.scale = :relative
       @exp = [
         [0.833, 0.667, 0.5, 1.0],

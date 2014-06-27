@@ -132,6 +132,7 @@ module MM
         # Ordered Metrics take the mean of differences
         Deltas.mean(diffs[0].zip(diffs[1]).map {|x| @inter_delta.call x})
       else
+        # Unordered Metrics take the difference of means
         Deltas.abs(diffs.map {|x| @inter_delta.call x})
       end
     end
