@@ -21,5 +21,21 @@ class TestMM::TestDeltas < Minitest::Test
     result = input.map {|x| MM::Deltas.abs(x)}
     assert_equal exp, result
   end
+  def test_tenney_ordered_intra_delta
+    input = [[Rational(1,1), Rational(3,2)], [Rational(3,2), Rational(5,4)]]
+    exp = [2.585, 4.907]
+    result = input.map {|x| MM::Deltas.tenney(x)}
+    result.zip(exp).each do |n|
+      assert_in_delta *n, 0.001
+    end
+  end
+  def test_log_ratio_ordered_intra_delta
+    input = [[Rational(1,1), Rational(3,2)], [Rational(3,2), Rational(5,4)]]
+    exp = [0.585, 0.263]
+    result = input.map {|x| MM::Deltas.log_ratio(x)}
+    result.zip(exp).each do |n|
+      assert_in_delta *n, 0.001
+    end
+  end
 end
 
