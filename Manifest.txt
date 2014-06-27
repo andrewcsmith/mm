@@ -14,6 +14,8 @@ lib/mm/deltas.rb
 lib/mm/metric.rb
 lib/mm/pairs.rb
 lib/mm/scaling.rb
+lib/shortcuts.yml
+test/mm/test_deltas.rb
 test/mm/test_metric.rb
 test/mm/test_mm.rb
 test/mm/test_pairs.rb
