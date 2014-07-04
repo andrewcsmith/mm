@@ -6,4 +6,5 @@ require 'mm/pairs.rb'
 require 'mm/metric.rb'
 require 'mm/deltas.rb'
 require 'mm/scaling.rb'
+require 'mm/ratio.rb'
 
