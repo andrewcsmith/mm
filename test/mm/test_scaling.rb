@@ -30,7 +30,7 @@ class TestMM::TestScaling < Minitest::Test
   def assert_nested_values exp, act, delta = 0.001, msg = nil
     exp.zip(act) do |x|
       x[0].zip(x[1]) do |y|
-        assert_in_delta *y, delta, msg
+        assert_in_delta(*y, delta, msg)
       end
     end
   end
