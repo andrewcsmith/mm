@@ -22,9 +22,11 @@ hoe = Hoe.spec "mm" do |h|
   require_rubygems_version '>= 1.4'
 end
 
-hoe.test_prelude = <<CC
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+if ENV['CODECLIMATE_REPO_TOKEN']
+  hoe.test_prelude = <<CC
+  require "codeclimate-test-reporter"
+  CodeClimate::TestReporter.start
 CC
+end
 
 # vim: syntax=ruby
