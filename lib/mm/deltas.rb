@@ -18,6 +18,9 @@ module MM
     def self.log_ratio n
       Math.log2(n[0] / n[1]).abs
     end
+    def self.ratio n
+      n[0] / n[1]
+    end
   end
 end
 
