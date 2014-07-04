@@ -13,5 +13,13 @@ class MM::Ratio
   def == other
     self.numerator == other.numerator && self.denominator == other.denominator
   end
+  def self.from_s r
+    if r.respond_to? :match
+      m = r.match(/(\d)\/(\d)/)
+      MM::Ratio.new(m[1].to_i, m[2].to_i)
+    else
+      r.map {|s| self.from_s s}
+    end
+  end
 end
 
