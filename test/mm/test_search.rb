@@ -1,7 +1,7 @@
 require 'mm/search'
 require_relative '../helpers.rb'
 
-class TestMM; end
+class TestMM < Minitest::Test; end
 
 class TestMM::TestSearch < Minitest::Test
   include TestHelpers
