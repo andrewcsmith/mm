@@ -16,7 +16,7 @@ module MM
     end
     # Accepts a tuple of anything that Math.log2 can handle
     def self.log_ratio n
-      Math.log2(n[0] / n[1]).abs
+      Math.log2((n[0] / n[1]).to_f).abs
     end
     def self.ratio n
       n[0] / n[1]
