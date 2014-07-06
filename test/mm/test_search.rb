@@ -40,5 +40,18 @@ class TestMM::TestSearch < Minitest::Test
     @search.cost_function = ->(x){x - 0.1}
     assert_in_delta 0.1, @search.find
   end
+  def test_find_returns_nil_when_nothing_found
+    @search.delta = 0.0
+    @search.starting_point = [0.1, 0.2, 0.3]
+    @search.adjacent_points_function = ->(current) {current.repeated_combination(3)}
+    @search.cost_function = ->(x) { x.inject(0, :+) / x.size }
+    assert_equal nil, @search.find
+  end
+  def test_backtrack_removes_point_and_adds_it_to_banned
+    @search.path = [0.1, 0.2]
+    @search.backtrack
+    assert_equal [0.1], @search.path
+    assert_equal [0.2], @search.banned
+  end
 end
 
