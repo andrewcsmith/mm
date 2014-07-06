@@ -10,6 +10,9 @@ class MM::Ratio
   def / other
     MM::Ratio.new(self.numerator * other.denominator, self.denominator * other.numerator)
   end
+  def * other
+    MM::Ratio.new(self.numerator * other.numerator, self.denominator * other.denominator)
+  end
   def == other
     self.numerator == other.numerator && self.denominator == other.denominator
   end
@@ -20,6 +23,12 @@ class MM::Ratio
     else
       r.map {|s| self.from_s s}
     end
+  end
+  def to_f
+    @numerator.to_f / @denominator
+  end
+  def reciprocal
+    MM::Ratio.new(@denominator, @numerator)
   end
 end
 
