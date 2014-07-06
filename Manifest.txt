@@ -17,6 +17,7 @@ lib/mm/ratio.rb
 lib/mm/scaling.rb
 lib/mm/search.rb
 lib/shortcuts.yml
+test/helpers.rb
 test/mm/test_deltas.rb
 test/mm/test_metric.rb
 test/mm/test_mm.rb
