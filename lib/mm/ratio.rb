@@ -1,3 +1,5 @@
+require 'yaml'
+
 module MM; end
 
 class MM::Ratio
@@ -23,6 +25,10 @@ class MM::Ratio
     else
       r.map {|s| self.from_s s}
     end
+  end
+  # Loads a sequence of MM::Ratios from a YAML file.
+  def self.from_yaml yaml_string
+    YAML.load(yaml_string).map {|r| MM::Ratio.from_s r}
   end
   def to_f
     @numerator.to_f / @denominator

@@ -36,5 +36,14 @@ class TestMM::TestRatio < Minitest::Test
   def test_reciprocal
     assert_equal MM::Ratio.new(2,3), @ratio.reciprocal
   end
+  def test_reads_ratios_from_yaml
+    ratios = MM::Ratio.from_yaml(<<-YAML)
+- 1/1
+- 3/2
+- 5/4
+    YAML
+    exp = [MM::Ratio.new(1,1), MM::Ratio.new(3,2), MM::Ratio.new(5,4)]
+    assert_equal exp, ratios
+  end
 end
 
