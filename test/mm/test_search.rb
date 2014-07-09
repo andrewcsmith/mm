@@ -35,6 +35,8 @@ class TestMM::TestSearch < Minitest::Test
     @search.adjacent_points_function = ->(current) {[-0.1, 0.1].map {|x| current + x}}
     assert_nested_in_delta [0.3, 0.5], @search.get_adjacent_points
   end
+
+  # Testing the final #find method!
   def test_find
     @search.adjacent_points_function = ->(current) {[-0.1, 0.1].map {|x| current + x}}
     @search.cost_function = ->(x){x - 0.1}
