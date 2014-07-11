@@ -7,21 +7,29 @@ class MM::Search
     @current_point = @starting_point
     @path = []
     @banned = []
+    @iterations = 0
   end
 
   attr_accessor :candidates, :delta, :starting_point, :path, :banned
   attr_writer :cost_function, :adjacent_points_function
 
+  attr_accessor :iterations
+
   # Finds a vector beginning from the starting point
   def find
     find_from_point @starting_point
   end
+
   def find_from_point point
+    @iterations = @iterations + 1
+    # The adjacent points are all sorted
+    raise StopIteration if cost_function(point) > current_cost
     add_to_path point
     # If we've made it, return it.
     unless made_it?
       begin
-        find_from_point get_sorted_adjacent_points.next
+        candidates = get_sorted_adjacent_points
+        find_from_point candidates.next
       rescue StopIteration
         # When the list of adjacent points runs out, backtrack
         backtrack
@@ -30,30 +38,38 @@ class MM::Search
     end
     @current_point
   end
+
   def add_to_path point
     @current_point = point
     @path << point
   end
+
   def backtrack
     @banned << @path.pop
     # puts "Path: #{@path}, Banned: #{@banned}"
     @current_point = @path.last
   end
+
   def calculate_cost candidates
     candidates.map {|x| cost_function x}
   end
+
   def made_it?
     current_cost < @delta
   end
+
   def cost_function *args
     @cost_function.call(*args)
   end
+  
   def current_cost
     cost_function @current_point
   end
+ 
   def get_adjacent_points *args
     @adjacent_points_function.call(@current_point, *args)
   end
+
   def get_sorted_adjacent_points *args
     get_adjacent_points(*args)
       .reject {|c| @path.include? c}
