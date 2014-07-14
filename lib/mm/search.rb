@@ -28,8 +28,7 @@ class MM::Search
     # If we've made it, return it.
     unless made_it?
       begin
-        candidates = get_sorted_adjacent_points
-        find_from_point candidates.next
+        find_from_point get_sorted_adjacent_points.next
       rescue StopIteration
         # When the list of adjacent points runs out, backtrack
         backtrack

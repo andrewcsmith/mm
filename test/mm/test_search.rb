@@ -71,7 +71,7 @@ class TestMM::TestSearch < Minitest::Test
   # 9000 - for Rational
   # 9000 - for MM::Ratio
   def test_find_stack_overflow
-    skip #because it takes *forever*
+    skip # because it takes *forever*
     @starting_point = MM::Ratio.new(1,1)
     @search = MM::Search.new(@starting_point)
     @search.delta = 0.001
