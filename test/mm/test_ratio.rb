@@ -1,6 +1,6 @@
 require 'mm/ratio'
 
-class TestMM; end
+class TestMM < Minitest::Test; end
 
 class TestMM::TestRatio < Minitest::Test
   def setup
