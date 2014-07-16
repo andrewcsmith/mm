@@ -13,12 +13,12 @@ class MM::Ratio
 
   attr_accessor :numerator, :denominator
 
-  def / other
-    self * other.reciprocal
-  end
-
   def * other
     MM::Ratio.new(self.numerator * other.numerator, self.denominator * other.denominator)
+  end
+
+  def / other
+    self * other.reciprocal
   end
 
   def + other
@@ -27,8 +27,7 @@ class MM::Ratio
   end
 
   def - other
-    MM::Ratio.new(self.numerator*other.denominator - other.numerator*self.denominator,
-                  self.denominator*other.denominator)
+    self + (other * MM::Ratio.new(-1,1))
   end
 
   def abs
@@ -49,24 +48,23 @@ class MM::Ratio
     return 0
   end
 
-#  def == other
-#    self.numerator == other.numerator && self.denominator == other.denominator
-#  end
-
   def self.from_s r
-    if r.respond_to? :match
-      result = r.split(/\s/).inject([]) { |memo, ratio|
-        m = ratio.match(/(\d+)\/(\d+)/)
-        if m
-          memo << MM::Ratio.new(m[1].to_i, m[2].to_i)
-        else
-          memo
-        end
-      }
-      result.size > 1 ? result : result[0]
+    if r.respond_to? :split
+      if r =~ /\s/
+        r.split(/\s/).inject([]) {|memo, ratio|
+          memo << self.from_s(ratio)
+        }
+      else
+        string_to_ratio r
+      end
     else
       r.map {|s| self.from_s s}
     end
+  end
+
+  def self.string_to_ratio string
+    m = string.match(/(\d+)\/(\d+)/)
+    MM::Ratio.new(m[1].to_i, m[2].to_i)
   end
 
   # Loads a sequence of MM::Ratios from a YAML file.
