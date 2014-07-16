@@ -55,8 +55,15 @@ class MM::Ratio
 
   def self.from_s r
     if r.respond_to? :match
-      m = r.match(/(\d+)\/(\d+)/)
-      MM::Ratio.new(m[1].to_i, m[2].to_i)
+      result = r.split(/\s/).inject([]) { |memo, ratio|
+        m = ratio.match(/(\d+)\/(\d+)/)
+        if m
+          memo << MM::Ratio.new(m[1].to_i, m[2].to_i)
+        else
+          memo
+        end
+      }
+      result.size > 1 ? result : result[0]
     else
       r.map {|s| self.from_s s}
     end

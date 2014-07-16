@@ -34,8 +34,12 @@ class TestMM::TestRatio < Minitest::Test
     assert_equal @ratio, MM::Ratio.from_s("3/2")
   end
 
-  def test_from_s_list
+  def test_from_s_array
     assert_equal [@ratio, @ratio], MM::Ratio.from_s(%w(3/2 3/2))
+  end
+
+  def test_from_s_list
+    assert_equal [@ratio, @ratio], MM::Ratio.from_s("3/2 3/2")
   end
 
   def test_from_s_multi_digit
