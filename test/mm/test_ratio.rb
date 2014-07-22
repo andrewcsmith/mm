@@ -93,5 +93,11 @@ class TestMM::TestRatio < Minitest::Test
     exp = [MM::Ratio.new(1,1), MM::Ratio.new(4,3), MM::Ratio.new(10,9)]
     assert_equal exp, MM::Ratio.change_interval(point, 0, MM::Ratio.new(3,4))
   end
+
+  def test_change_interval_reciprocal
+    point = [MM::Ratio.new(1,1), MM::Ratio.new(3,2), MM::Ratio.new(5,4)]
+    exp = [MM::Ratio.new(1,1), MM::Ratio.new(2,3), MM::Ratio.new(5,9)]
+    assert_equal exp, MM::Ratio.change_interval(point, 0, :reciprocal)
+  end
 end
 

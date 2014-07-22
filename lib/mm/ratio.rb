@@ -94,6 +94,9 @@ class MM::Ratio
 
   def self.change_interval point, index, interval
     vector = MM::Ratio.to_vector(point)
+    if interval == :reciprocal
+      interval = vector[index].reciprocal
+    end
     vector[index] = interval
     MM::Ratio.from_vector(vector)
   end
