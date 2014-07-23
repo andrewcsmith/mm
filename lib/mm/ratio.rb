@@ -1,4 +1,5 @@
 require 'yaml'
+require 'prime'
 
 module MM; end
 
@@ -28,6 +29,15 @@ class MM::Ratio
 
   def - other
     self + (other * MM::Ratio.new(-1,1))
+  end
+
+  # Works very similarly to the Prime::prime_division method, except that
+  # factors in the numerator are positive, and factors in the denominator are
+  # negative.
+  def factors
+    n_factors = ::Prime.prime_division(@numerator)
+    d_factors = ::Prime.prime_division(@denominator).map {|d| d[1] *= -1; d}
+    n_factors.concat(d_factors).sort_by {|x| x[0]}
   end
 
   def abs
