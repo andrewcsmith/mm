@@ -1,0 +1,13 @@
+Tue, 29 Jul 2014 12:20:17 -0500
+lib/mm.rb	Thu, 10 Jul 2014 14:56:54 -0500
+lib/mm/metric.rb	Thu, 10 Jul 2014 14:56:54 -0500
+lib/mm/deltas.rb	Wed, 23 Jul 2014 11:20:39 -0500
+lib/mm/scaling.rb	Thu, 10 Jul 2014 14:56:54 -0500
+lib/mm/search.rb	Mon, 14 Jul 2014 11:14:07 -0500
+lib/mm/pairs.rb	Thu, 10 Jul 2014 14:56:54 -0500
+lib/mm/ratio.rb	Wed, 23 Jul 2014 11:20:39 -0500
+lib/shortcuts.yml	Thu, 10 Jul 2014 14:56:54 -0500
+History.txt	Thu, 10 Jul 2014 14:56:54 -0500
+Manifest.txt	Fri, 11 Jul 2014 13:04:45 -0500
+README.rdoc	Thu, 10 Jul 2014 14:56:54 -0500
+ROADMAP.txt	Thu, 10 Jul 2014 14:56:54 -0500

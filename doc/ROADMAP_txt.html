@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>ROADMAP - mm-1.0.0 Documentation</title>
+
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Metric+Class+Methods+">Metric Class Methods </a>
+    <li><a href="#label-%3A%3Anew%28ordering%2C+pairing%2C+scaling%2C+delta%29+">::new(ordering, pairing, scaling, delta) </a>
+    <li><a href="#label-%3A%3Aolm%28scaling%2C+delta%29+">::olm(scaling, delta) </a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./History_txt.html">History</a>
+  
+    <li><a href="./Manifest_txt.html">Manifest</a>
+  
+    <li><a href="./README_rdoc.html">README</a>
+  
+    <li><a href="./ROADMAP_txt.html">ROADMAP</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page ROADMAP.txt">
+<ul><li>
+<p>Complete functions for getting combinatorial and adjacent pairs</p>
+
+<pre>- fix any problems with shapes, test more thoroughly
+- add the ability to recurse throughout an Array tree</pre>
+</li><li>
+<p>Create a selection of distance functions that work with NMatrix etc</p>
+</li><li>
+<p>These should be implementation-agnostic</p>
+</li><li>
+<p>Ideally they should be of the symbol/method format, where the user passes a
+symbol of the method to the metric</p>
+</li><li>
+<p>Create a Metric class, perhaps as a subclass of Proc</p>
+</li><li>
+<p>What does it mean to subclass Proc?</p>
+</li><li>
+<p>Do some research.</p>
+
+<pre>- What about subclassing Method? What would that give us?</pre>
+</li><li>
+<p>Instead of a “factory” class, the creation of the metric should take place
+in its initialization.</p>
+
+<pre>- Metric.new should take arguments similar to DistConfig, but with a
+  specific implementation of OLM, OCM, etc. 
+- This is out of a desire to tie the selection of the logic into the
+  distance function.
+- However, there could be MM.ocm, MM.olm, etc., functions that are
+  &quot;factories&quot; that call the normal instantiation method. But it should</pre>
+</li></ul>
+
+<p>not be possible to create a metric without the DistConfig in instantiation.</p>
+
+<p>Implementation and interface requirements:</p>
+<ul><li>
+<p>Objects should implement [] and each</p>
+</li><li>
+<p>Objects should implement whatever distance method is called by the Metric</p>
+</li></ul>
+
+<p>Additional distance functions should (ideally) be in their own gems.</p>
+
+<h2 id="label-Metric+Class+Methods+">Metric Class Methods <span><a href="#label-Metric+Class+Methods+">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<h3 id="label-%3A%3Anew%28ordering%2C+pairing%2C+scaling%2C+delta%29+">::new(ordering, pairing, scaling, delta) <span><a href="#label-%3A%3Anew%28ordering%2C+pairing%2C+scaling%2C+delta%29+">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Generates a new morphological metric based on various parameters</p>
+
+<p>*<strong>ordered</strong>*: can be true or false. Corresponds to
+ordered/unordered.</p>
+
+<p>*<strong>pairing</strong>*: Similar to the delta. If it is a Proc, then the
+pairing function is called on each vector (or however it is handled by the
+ordering). If it is a Symbol, then we look it up in MM::PAIRING_FUNCTIONS.</p>
+
+<p>*<strong>scaling</strong>*: <strong>always</strong> a Proc. There are
+prebaked scaling functions for absolute, relative, and unscaled that are
+available for use. If a Symbol is passed instead of a Proc, it looks for
+the Proc in the Hash MM::SCALING_FUNCTIONS</p>
+
+<p>**delta functions**: If it is a Proc, then the delta function is used as
+d(x, y) on each element. If it is a symbol, then the symbol is first looked
+up in the MM::DELTA_FUNCTIONS hash. If it is not found, then x.symbol(y) is
+attempted. Delta functions should aspire to being as general as possible;
+let the source implement the method.</p>
+
+<p>*<strong>order</strong>*: this is confusing terminology - first-order and
+second-order difference functions.</p>
+
+<p>**interval functions**: We should instead brew the int_func into the method
+of finding pairs. This is where the Pairs class might come in handy; it
+could generate functions (Procs, whatever) as a factory from various
+values, taking into account what each value should be compared to. It&#39;s
+not [element, element], but [element, comparison-element] that matters.</p>
+
+<h3 id="label-%3A%3Aolm%28scaling%2C+delta%29+">::olm(scaling, delta) <span><a href="#label-%3A%3Aolm%28scaling%2C+delta%29+">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Generates a new morphological metric calling ::new with the given ordering
+and pairing</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

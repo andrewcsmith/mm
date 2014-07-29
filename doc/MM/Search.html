@@ -1,0 +1,1346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: MM::Search
+  
+    &mdash; Documentation by YARD 0.8.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!MM/Search.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../MM.html" title="MM (module)">MM</a></span></span>
+     &raquo; 
+    <span class="title">Search</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: MM::Search
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">MM::Search</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/mm/search.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#adjacent_points_function%3D-instance_method" title="#adjacent_points_function= (instance method)">- (Object) <strong>adjacent_points_function</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the attribute adjacent_points_function @param value the value to set
+the attribute adjacent_points_function to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#banned-instance_method" title="#banned (instance method)">- (Object) <strong>banned</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute banned.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#candidates-instance_method" title="#candidates (instance method)">- (Object) <strong>candidates</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute candidates.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cost_function-instance_method" title="#cost_function (instance method)">- (Object) <strong>cost_function</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delta-instance_method" title="#delta (instance method)">- (Object) <strong>delta</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute delta.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#iterations-instance_method" title="#iterations (instance method)">- (Object) <strong>iterations</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute iterations.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path-instance_method" title="#path (instance method)">- (Object) <strong>path</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute path.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#starting_point-instance_method" title="#starting_point (instance method)">- (Object) <strong>starting_point</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute starting_point.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_to_path-instance_method" title="#add_to_path (instance method)">- (Object) <strong>add_to_path</strong>(point) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#backtrack-instance_method" title="#backtrack (instance method)">- (Object) <strong>backtrack</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#calculate_cost-instance_method" title="#calculate_cost (instance method)">- (Object) <strong>calculate_cost</strong>(candidates) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_cost-instance_method" title="#current_cost (instance method)">- (Object) <strong>current_cost</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-instance_method" title="#find (instance method)">- (Object) <strong>find</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Finds a vector beginning from the starting point.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_from_point-instance_method" title="#find_from_point (instance method)">- (Object) <strong>find_from_point</strong>(point) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_adjacent_points-instance_method" title="#get_adjacent_points (instance method)">- (Object) <strong>get_adjacent_points</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_sorted_adjacent_points-instance_method" title="#get_sorted_adjacent_points (instance method)">- (Object) <strong>get_sorted_adjacent_points</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Search) <strong>initialize</strong>(starting_point, delta = 0.001) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Search.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#made_it%3F-instance_method" title="#made_it? (instance method)">- (Boolean) <strong>made_it?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="MM::Search (class)">Search</a></span></tt>) <strong>initialize</strong>(starting_point, delta = 0.001) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Search</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6
+7
+8
+9
+10
+11</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_starting_point'>starting_point</span><span class='comma'>,</span> <span class='id identifier rubyid_delta'>delta</span> <span class='op'>=</span> <span class='float'>0.001</span>
+  <span class='ivar'>@starting_point</span> <span class='op'>=</span> <span class='id identifier rubyid_starting_point'>starting_point</span>
+  <span class='ivar'>@delta</span> <span class='op'>=</span> <span class='id identifier rubyid_delta'>delta</span>
+  <span class='ivar'>@current_point</span> <span class='op'>=</span> <span class='ivar'>@starting_point</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@banned</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@iterations</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="adjacent_points_function=-instance_method">
+  
+    - (<tt>Object</tt>) <strong>adjacent_points_function=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the attribute adjacent_points_function @param value the value to set
+the attribute adjacent_points_function to.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_adjacent_points_function='>adjacent_points_function=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@adjacent_points_function</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="banned=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="banned-instance_method">
+  
+    - (<tt>Object</tt>) <strong>banned</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute banned</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_banned'>banned</span>
+  <span class='ivar'>@banned</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="candidates=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="candidates-instance_method">
+  
+    - (<tt>Object</tt>) <strong>candidates</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute candidates</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_candidates'>candidates</span>
+  <span class='ivar'>@candidates</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="cost_function=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="cost_function-instance_method">
+  
+    - (<tt>Object</tt>) <strong>cost_function</strong>(*args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cost_function'>cost_function</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='ivar'>@cost_function</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="delta=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="delta-instance_method">
+  
+    - (<tt>Object</tt>) <strong>delta</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute delta</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delta'>delta</span>
+  <span class='ivar'>@delta</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="iterations=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="iterations-instance_method">
+  
+    - (<tt>Object</tt>) <strong>iterations</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute iterations</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_iterations'>iterations</span>
+  <span class='ivar'>@iterations</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="path=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="path-instance_method">
+  
+    - (<tt>Object</tt>) <strong>path</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute path</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="starting_point=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="starting_point-instance_method">
+  
+    - (<tt>Object</tt>) <strong>starting_point</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute starting_point</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_starting_point'>starting_point</span>
+  <span class='ivar'>@starting_point</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_to_path-instance_method">
+  
+    - (<tt>Object</tt>) <strong>add_to_path</strong>(point) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_to_path'>add_to_path</span> <span class='id identifier rubyid_point'>point</span>
+  <span class='ivar'>@current_point</span> <span class='op'>=</span> <span class='id identifier rubyid_point'>point</span>
+  <span class='ivar'>@path</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_point'>point</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="backtrack-instance_method">
+  
+    - (<tt>Object</tt>) <strong>backtrack</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 46</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_backtrack'>backtrack</span>
+  <span class='ivar'>@banned</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@path</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+  <span class='comment'># puts &quot;Path: #{@path}, Banned: #{@banned}&quot;
+</span>  <span class='ivar'>@current_point</span> <span class='op'>=</span> <span class='ivar'>@path</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="calculate_cost-instance_method">
+  
+    - (<tt>Object</tt>) <strong>calculate_cost</strong>(candidates) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_calculate_cost'>calculate_cost</span> <span class='id identifier rubyid_candidates'>candidates</span>
+  <span class='id identifier rubyid_candidates'>candidates</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_cost_function'>cost_function</span> <span class='id identifier rubyid_x'>x</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_cost-instance_method">
+  
+    - (<tt>Object</tt>) <strong>current_cost</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 64</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_cost'>current_cost</span>
+  <span class='id identifier rubyid_cost_function'>cost_function</span> <span class='ivar'>@current_point</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find-instance_method">
+  
+    - (<tt>Object</tt>) <strong>find</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Finds a vector beginning from the starting point</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find'>find</span>
+  <span class='id identifier rubyid_find_from_point'>find_from_point</span> <span class='ivar'>@starting_point</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_from_point-instance_method">
+  
+    - (<tt>Object</tt>) <strong>find_from_point</strong>(point) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>StopIteration</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_from_point'>find_from_point</span> <span class='id identifier rubyid_point'>point</span>
+  <span class='ivar'>@iterations</span> <span class='op'>=</span> <span class='ivar'>@iterations</span> <span class='op'>+</span> <span class='int'>1</span>
+  <span class='comment'># The adjacent points are all sorted
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>StopIteration</span> <span class='kw'>if</span> <span class='id identifier rubyid_cost_function'>cost_function</span><span class='lparen'>(</span><span class='id identifier rubyid_point'>point</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_current_cost'>current_cost</span>
+  <span class='id identifier rubyid_add_to_path'>add_to_path</span> <span class='id identifier rubyid_point'>point</span>
+  <span class='comment'># If we&#39;ve made it, return it.
+</span>  <span class='kw'>unless</span> <span class='id identifier rubyid_made_it?'>made_it?</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_find_from_point'>find_from_point</span> <span class='id identifier rubyid_get_sorted_adjacent_points'>get_sorted_adjacent_points</span><span class='period'>.</span><span class='id identifier rubyid_next'>next</span>
+    <span class='kw'>rescue</span> <span class='const'>StopIteration</span>
+      <span class='comment'># When the list of adjacent points runs out, backtrack
+</span>      <span class='id identifier rubyid_backtrack'>backtrack</span>
+      <span class='kw'>retry</span> <span class='kw'>unless</span> <span class='ivar'>@current_point</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@current_point</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_adjacent_points-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_adjacent_points</strong>(*args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_adjacent_points'>get_adjacent_points</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='ivar'>@adjacent_points_function</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='ivar'>@current_point</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_sorted_adjacent_points-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_sorted_adjacent_points</strong>(*args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_sorted_adjacent_points'>get_sorted_adjacent_points</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='id identifier rubyid_get_adjacent_points'>get_adjacent_points</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>
+</span><span class='id identifier rubyid_    .reject'>    .reject</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='ivar'>@path</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_c'>c</span><span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_    .reject'>    .reject</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='ivar'>@banned</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_c'>c</span><span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_    .sort_by'>    .sort_by</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_cost_function'>cost_function</span> <span class='id identifier rubyid_x'>x</span><span class='rbrace'>}</span><span class='period'>
+</span><span class='id identifier rubyid_    .to_enum'>    .to_enum</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="made_it?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>made_it?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mm/search.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_made_it?'>made_it?</span>
+  <span class='id identifier rubyid_current_cost'>current_cost</span> <span class='op'>&lt;</span> <span class='ivar'>@delta</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Jul 29 12:34:32 2014 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.4 (ruby-2.1.1).
+</div>
+
+  </body>
+</html>
