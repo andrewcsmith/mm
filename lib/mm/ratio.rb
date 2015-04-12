@@ -49,6 +49,9 @@ class MM::Ratio
   end
 
   def <=> other
+    # Ensure that the comparison makes sense
+    return nil unless other.respond_to? :-
+
     case
     when (self - other).to_f > 0
       return 1
