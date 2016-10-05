@@ -1,6 +1,10 @@
 module MM; end
 
+# All you need to do is add an adjacent_points_function and cost_function
 class MM::Search
+  attr_accessor :candidates, :delta, :starting_point, :path, :banned, :iterations
+  attr_writer :cost_function, :adjacent_points_function
+
   def initialize starting_point, delta = 0.001
     @starting_point = starting_point
     @delta = delta
@@ -10,32 +14,29 @@ class MM::Search
     @iterations = 0
   end
 
-  attr_accessor :candidates, :delta, :starting_point, :path, :banned
-  attr_writer :cost_function, :adjacent_points_function
-
-  attr_accessor :iterations
-
   # Finds a vector beginning from the starting point
   def find
     find_from_point @starting_point
   end
 
   def find_from_point point
-    @iterations = @iterations + 1
+    @iterations += 1
     # The adjacent points are all sorted
-    raise StopIteration if cost_function(point) > current_cost
+    # raise StopIteration if cost_function(point) > current_cost
     add_to_path point
+    sorted_adjacent_points = get_sorted_adjacent_points
     # If we've made it, return it.
-    unless made_it?
+    if made_it?
+      @current_point
+    else
       begin
-        find_from_point get_sorted_adjacent_points.next
-      rescue StopIteration
+        find_from_point sorted_adjacent_points.next
+      rescue StopIteration => er
         # When the list of adjacent points runs out, backtrack
         backtrack
         retry unless @current_point.nil?
       end
     end
-    @current_point
   end
 
   def add_to_path point
@@ -45,7 +46,7 @@ class MM::Search
 
   def backtrack
     @banned << @path.pop
-    # puts "Path: #{@path}, Banned: #{@banned}"
+    puts "Path: #{@path.size}, Banned: #{@banned.size}" if ENV["DEBUG_RB"] && ENV["DEBUG_RB"].to_i > 1
     @current_point = @path.last
   end
 

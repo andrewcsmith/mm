@@ -5,6 +5,7 @@ module MM; end
 
 class MM::Ratio
   include Comparable
+  include Enumerable
 
   def initialize n, d
     gcd = n.gcd d
@@ -61,6 +62,18 @@ class MM::Ratio
     return 0
   end
 
+  def eql? other
+    other.is_a?(MM::Ratio) && (self == other)
+  end
+
+  def hash
+    [@numerator, @denominator, MM::Ratio].hash
+  end
+
+  def cents
+    Math.log2(self.to_f) * 1200.0
+  end
+
   def self.from_s r
     if r.respond_to? :split
       if r =~ /\s/
@@ -95,6 +108,24 @@ class MM::Ratio
 
   def reciprocal
     MM::Ratio.new(@denominator, @numerator)
+  end
+
+  def prime_limit
+    self.map { |r|
+      r.prime_division.map { |s|
+        s.first
+      }.max
+    }.compact.max
+  end
+
+  def each
+    if block_given?
+      [@numerator, @denominator].each do |r|
+        yield r
+      end
+    else
+      [@numerator, @denominator].each
+    end
   end
 
   def self.to_vector point

@@ -15,7 +15,7 @@ Hoe.plugin :inline
 Hoe.plugin :minitest
 Hoe.plugin :package
 
-hoe = Hoe.spec "mm" do |h|
+hoe = Hoe.spec "morphological_metrics" do |h|
   developer("Andrew C. Smith", "andrewchristophersmith@gmail.com")
   license "MIT" # this should match the license in the README
   self.readme_file = "README.rdoc"

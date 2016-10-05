@@ -4,6 +4,10 @@ module MM
       (n[0] - n[1]).abs
     end
 
+    def self.diff n
+      n[0] - n[1]
+    end
+
     def self.mean n
       n.inject(0.0, :+) / n.size
     end

@@ -1,4 +1,4 @@
-require 'yaml'
+require 'psych'
 
 module MM
   class Metric
@@ -177,7 +177,7 @@ module MM
     # ::ocd
     # ::uld
     # ::ucd
-    METHOD_SHORTCUTS = YAML.load(File.read(File.join(File.dirname(__FILE__), '..', 'shortcuts.yml')))
+    METHOD_SHORTCUTS = Psych.load(File.read(File.join(File.dirname(__FILE__), '..', 'shortcuts.yml')))
 
     class << self
       METHOD_SHORTCUTS.each do |k, v|

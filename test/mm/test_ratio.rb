@@ -54,6 +54,14 @@ class TestMM::TestRatio < Minitest::Test
     assert_equal "3/2", @ratio.to_s
   end
 
+  def test_eql
+    assert @ratio.eql?(MM::Ratio.new(3,2))
+  end
+
+  def test_uniq
+    assert_equal [MM::Ratio.new(3,2)], [MM::Ratio.new(3,2), @ratio].uniq
+  end
+
   def test_plus
     assert_equal MM::Ratio.new(3,1), @ratio + @ratio
   end
@@ -64,6 +72,10 @@ class TestMM::TestRatio < Minitest::Test
 
   def test_reciprocal
     assert_equal MM::Ratio.new(2,3), @ratio.reciprocal
+  end
+
+  def test_cents
+    assert_in_delta 701.955, @ratio.cents
   end
 
   def test_reads_ratios_from_yaml
@@ -103,6 +115,18 @@ class TestMM::TestRatio < Minitest::Test
   def test_factors
     assert_equal [[2, -1], [3, 1]], MM::Ratio.new(3,2).factors
     assert_equal [[2, -1], [3, -1], [5, 1]], MM::Ratio.new(5,6).factors
+  end
+
+  def test_each
+    enumerator = MM::Ratio.new(3,2).each
+    assert_kind_of Enumerator, enumerator
+    assert_equal 3, enumerator.next
+    assert_equal 2, enumerator.next
+  end
+
+  def test_prime_limit
+    assert_equal 13, MM::Ratio.new(26,5).prime_limit
+    assert_equal nil, MM::Ratio.new(1,1).prime_limit
   end
 end
 

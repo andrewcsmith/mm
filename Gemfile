@@ -4,6 +4,7 @@ gem 'hoe-travis'
 gem 'rake'
 gem 'rake-compiler'
 gem 'hoe'
+gem 'psych'
 
 group :test do
   gem 'minitest', '~> 5.0'
