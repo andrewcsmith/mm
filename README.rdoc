@@ -6,7 +6,7 @@
 
 = mm
 
-https://www.github.com/andrewcsmith/mm
+https://github.com/andrewcsmith/mm
 
 == DESCRIPTION:
 
