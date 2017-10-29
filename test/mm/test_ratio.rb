@@ -128,5 +128,12 @@ class TestMM::TestRatio < Minitest::Test
     assert_equal 13, MM::Ratio.new(26,5).prime_limit
     assert_nil MM::Ratio.new(1,1).prime_limit
   end
+
+  def test_array_access
+    r = MM::Ratio.new(3, 2)
+    assert_equal r[0], 3
+    assert_equal r[1], 2
+    assert_nil r[2]
+  end
 end
 

@@ -32,6 +32,14 @@ class MM::Ratio
     self + (other * MM::Ratio.new(-1,1))
   end
 
+  def [] i
+    if i == 0
+      self.numerator
+    elsif i == 1
+      self.denominator
+    end
+  end
+
   # Works very similarly to the Prime::prime_division method, except that
   # factors in the numerator are positive, and factors in the denominator are
   # negative.
