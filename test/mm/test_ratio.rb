@@ -126,7 +126,7 @@ class TestMM::TestRatio < Minitest::Test
 
   def test_prime_limit
     assert_equal 13, MM::Ratio.new(26,5).prime_limit
-    assert_equal nil, MM::Ratio.new(1,1).prime_limit
+    assert_nil MM::Ratio.new(1,1).prime_limit
   end
 end
 

@@ -56,7 +56,7 @@ class TestMM::TestSearch < Minitest::Test
     @search.starting_point = [0.1, 0.2, 0.3]
     @search.adjacent_points_function = ->(current) {current.repeated_combination(3)}
     @search.cost_function = ->(x) { x.inject(0, :+) / x.size }
-    assert_equal nil, @search.find
+    assert_nil @search.find
   end
 
   def test_backtrack_removes_point_and_adds_it_to_banned
