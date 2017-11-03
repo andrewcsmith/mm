@@ -14,5 +14,5 @@ end
 group :development do
   gem 'flog'
   gem 'flay'
+  gem 'pry'
 end
-

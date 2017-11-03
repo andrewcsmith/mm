@@ -3,6 +3,7 @@ GEM
   specs:
     codeclimate-test-reporter (0.3.0)
       simplecov (>= 0.7.1, < 1.0.0)
+    coderay (1.1.2)
     docile (1.1.5)
     flay (2.5.0)
       ruby_parser (~> 3.0)
@@ -16,8 +17,12 @@ GEM
     hoe-travis (1.2)
       hoe (~> 3.0)
       travis-lint (~> 1.2)
+    method_source (0.9.0)
     minitest (5.4.0)
     multi_json (1.10.1)
+    pry (0.11.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     psych (2.1.1)
     rake (10.3.2)
     rake-compiler (0.9.2)
@@ -45,6 +50,7 @@ DEPENDENCIES
   hoe
   hoe-travis
   minitest (~> 5.0)
+  pry
   psych
   rake
   rake-compiler
